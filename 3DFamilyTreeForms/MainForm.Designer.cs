@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -40,6 +41,13 @@
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.about3DFamilyTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnShowLog = new System.Windows.Forms.Button();
+            this.btnSaveAs = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,10 +112,13 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
-            this.exitToolStripMenuItem,
             this.toolStripSeparator1,
-            this.startToolStripMenuItem});
+            this.startToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -115,8 +126,8 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save As...";
             // 
             // exitToolStripMenuItem
             // 
@@ -152,11 +163,59 @@
             this.about3DFamilyTreeToolStripMenuItem.Text = "About 3D Family Tree";
             this.about3DFamilyTreeToolStripMenuItem.Click += new System.EventHandler(this.about3DFamilyTreeToolStripMenuItem_Click);
             // 
+            // btnShowLog
+            // 
+            this.btnShowLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnShowLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowLog.Location = new System.Drawing.Point(174, 314);
+            this.btnShowLog.Name = "btnShowLog";
+            this.btnShowLog.Size = new System.Drawing.Size(123, 39);
+            this.btnShowLog.TabIndex = 3;
+            this.btnShowLog.Text = "Show Log";
+            this.btnShowLog.UseVisualStyleBackColor = true;
+            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            // 
+            // btnSaveAs
+            // 
+            this.btnSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveAs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveAs.Location = new System.Drawing.Point(318, 314);
+            this.btnSaveAs.Name = "btnSaveAs";
+            this.btnSaveAs.Size = new System.Drawing.Size(123, 39);
+            this.btnSaveAs.TabIndex = 4;
+            this.btnSaveAs.Text = "Save As...";
+            this.btnSaveAs.UseVisualStyleBackColor = true;
+            this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 362);
+            this.Controls.Add(this.btnSaveAs);
+            this.Controls.Add(this.btnShowLog);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.txtOutput);
@@ -185,6 +244,13 @@
         private System.Windows.Forms.ToolStripMenuItem about3DFamilyTreeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+        private System.Windows.Forms.Button btnShowLog;
+        private System.Windows.Forms.Button btnSaveAs;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

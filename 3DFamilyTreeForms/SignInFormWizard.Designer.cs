@@ -66,11 +66,7 @@ namespace _3DFamilyTreeForms
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.tabSaveAs = new System.Windows.Forms.TabPage();
-            this.txtFinalStatus = new System.Windows.Forms.TextBox();
-            this.btnFinalPrevious = new System.Windows.Forms.Button();
-            this.btnDone = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tabWizard.SuspendLayout();
             this.tabSignIn.SuspendLayout();
             this.tabStartingID.SuspendLayout();
@@ -78,7 +74,6 @@ namespace _3DFamilyTreeForms
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numGenerations)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.tabSaveAs.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtUsername
@@ -171,7 +166,6 @@ namespace _3DFamilyTreeForms
             this.tabWizard.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabWizard.Controls.Add(this.tabSignIn);
             this.tabWizard.Controls.Add(this.tabStartingID);
-            this.tabWizard.Controls.Add(this.tabSaveAs);
             this.tabWizard.ItemSize = new System.Drawing.Size(58, 18);
             this.tabWizard.Location = new System.Drawing.Point(2, 1);
             this.tabWizard.Name = "tabWizard";
@@ -266,6 +260,7 @@ namespace _3DFamilyTreeForms
             this.txtStartingID.Name = "txtStartingID";
             this.txtStartingID.Size = new System.Drawing.Size(88, 20);
             this.txtStartingID.TabIndex = 4;
+            this.txtStartingID.TextChanged += new System.EventHandler(this.txtStartingID_TextChanged);
             // 
             // btnPrevious
             // 
@@ -484,59 +479,11 @@ namespace _3DFamilyTreeForms
             this.panel2.Size = new System.Drawing.Size(302, 53);
             this.panel2.TabIndex = 34;
             // 
-            // tabSaveAs
+            // saveFileDialog1
             // 
-            this.tabSaveAs.Controls.Add(this.txtFinalStatus);
-            this.tabSaveAs.Controls.Add(this.btnFinalPrevious);
-            this.tabSaveAs.Controls.Add(this.btnDone);
-            this.tabSaveAs.Controls.Add(this.label8);
-            this.tabSaveAs.Location = new System.Drawing.Point(4, 22);
-            this.tabSaveAs.Name = "tabSaveAs";
-            this.tabSaveAs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSaveAs.Size = new System.Drawing.Size(354, 372);
-            this.tabSaveAs.TabIndex = 2;
-            this.tabSaveAs.Text = "Save As";
-            this.tabSaveAs.UseVisualStyleBackColor = true;
-            // 
-            // txtFinalStatus
-            // 
-            this.txtFinalStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFinalStatus.Location = new System.Drawing.Point(6, 344);
-            this.txtFinalStatus.Name = "txtFinalStatus";
-            this.txtFinalStatus.ReadOnly = true;
-            this.txtFinalStatus.Size = new System.Drawing.Size(341, 20);
-            this.txtFinalStatus.TabIndex = 9;
-            this.txtFinalStatus.TabStop = false;
-            // 
-            // btnFinalPrevious
-            // 
-            this.btnFinalPrevious.Location = new System.Drawing.Point(25, 310);
-            this.btnFinalPrevious.Name = "btnFinalPrevious";
-            this.btnFinalPrevious.Size = new System.Drawing.Size(75, 23);
-            this.btnFinalPrevious.TabIndex = 7;
-            this.btnFinalPrevious.Text = "<< Previous";
-            this.btnFinalPrevious.UseVisualStyleBackColor = true;
-            this.btnFinalPrevious.Click += new System.EventHandler(this.btnFinalPrevious_Click);
-            // 
-            // btnDone
-            // 
-            this.btnDone.Location = new System.Drawing.Point(250, 310);
-            this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(75, 23);
-            this.btnDone.TabIndex = 8;
-            this.btnDone.Text = "Done";
-            this.btnDone.UseVisualStyleBackColor = true;
-            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("MS Reference Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(33, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(245, 26);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Future Save As Dialog";
+            this.saveFileDialog1.DefaultExt = "3dft";
+            this.saveFileDialog1.FileName = "FamilyTree";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // SignInFormWizard
             // 
@@ -565,8 +512,6 @@ namespace _3DFamilyTreeForms
             ((System.ComponentModel.ISupportInitialize)(this.numGenerations)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabSaveAs.ResumeLayout(false);
-            this.tabSaveAs.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -606,12 +551,8 @@ namespace _3DFamilyTreeForms
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel2;
-        private TabPage tabSaveAs;
-        private Label label8;
         private TextBox txtInstructions;
         private Button btnVerify;
-        private TextBox txtFinalStatus;
-        private Button btnFinalPrevious;
-        private Button btnDone;
+        private SaveFileDialog saveFileDialog1;
     }
 }

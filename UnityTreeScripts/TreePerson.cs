@@ -15,6 +15,7 @@ namespace UnityTreeScripts
         public PersonSex Sex = PersonSex.NotSet;
         public string Birth = "";
         public string Death = "";
+        public string Lifespan = "";
         public List<FamilyEvent> myEvents;
         public int BirthFamilyIndex = 0;
         public int MarriedFamilyIndex = 0;
@@ -103,9 +104,10 @@ namespace UnityTreeScripts
 
                         // Just the basics of the person are set now
                         Name = familySearchPerson.DisplayExtension.Name;
-                        Sex = GetSexEnum(familySearchPerson.DisplayExtension.Gender);
+                        Sex = GetSexEnum(familySearchPerson.DisplayExtension.Gender);                      
                         Birth = familySearchPerson.DisplayExtension.BirthDate;
                         Death = familySearchPerson.DisplayExtension.DeathDate;
+                        Lifespan = familySearchPerson.DisplayExtension.Lifespan;
                         _familySearchID = familySearchPerson.Id;
                     }
 
@@ -280,10 +282,16 @@ namespace UnityTreeScripts
             string age = this.ageText(currentYear);
 
             string retString = "Name=" + this.Name + "(" + personIndex + ") FS ID " + this._familySearchID + ", Sex=" + this.GetSex() + ", Birth=" +
-                               this.Birth + ", Death=" +
+                               this.Birth + ", " +
                                (this.Death == ""
                                    ? ("Living, Age=" + age)
-                                   : (this.Death + " age at death=" + ageAtDeath())) + "\r\n";
+                                   : ("Death=" + this.Death +
+                                   (this.Lifespan == "" ? " age at death=" + ageAtDeath() : " Lifespan=" + this.Lifespan)
+                                   )) + "\r\n";
+
+       //     (this.Death == ""
+       //? ("Living, Age=" + age)
+       //: (this.Death + " age at death=" + ageAtDeath())) + "\r\n";
             foreach (FamilyEvent chkEvent in myEvents)
             {
                 retString += chkEvent.GetText() + "\r\n";

@@ -37,6 +37,10 @@ namespace _3DFamilyTreeForms
         public int adamEveStartYear = 0;
         public int adamEveEndYear = 80;
 
+        public string fileName = ""; // used for file read and save
+        public bool isReadFromFile = false;
+        public bool isSaveToFile = false;
+
         public FamilySearchFamilyTree ft = null;
 
         private CourtHouse _courtHouse;

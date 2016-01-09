@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,14 +30,15 @@ namespace _3DFamilyTreeForms
 
         //private FamilySearchFamilyTree tree;
         private CourtHouse _courtHouse = null;
-        private FamilyHistorySource _familyHistorySource = null;
+        private FamilyHistorySource _fhs = null;
 
         public MainForm()
         {
             InitializeComponent();
 
-            _familyHistorySource = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
+            _fhs = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
 
+            EnableOutputUI(false);
             txtOutput.Text = "Welcome to 3D Family Tree!  Click Start to get going.";
             btnStart.Focus();
 
@@ -45,14 +47,14 @@ namespace _3DFamilyTreeForms
         private void BtnStartClick(object sender, EventArgs e)
         {
             txtOutput.Text = "Let's get started!";
-            EnableUI(false);
+            EnableStartUI(false);
             StartFamilySearchConnection();
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             txtOutput.Text = "Let's get started!";
-            EnableUI(false);
+            EnableStartUI(false);
             StartFamilySearchConnection();
 
         }
@@ -62,7 +64,7 @@ namespace _3DFamilyTreeForms
             _courtHouse = new CourtHouse();
             txtOutput.Text = "Signing in.";
 
-            if (_familyHistorySource.initializeConnection())
+            if (_fhs.initializeConnection())
             {
 
                 txtOutput.Text = "Collecting Results, please wait...";
@@ -74,7 +76,7 @@ namespace _3DFamilyTreeForms
             {
                 txtOutput.Text = "Canceled Sign in.";
 
-                EnableUI(true);
+                EnableStartUI(true);
             }
 
         }
@@ -85,9 +87,9 @@ namespace _3DFamilyTreeForms
             
             //TODO Start at the account owner's person
             
-            if (!_familyHistorySource.readCollection(_courtHouse, worker)) { e.Cancel = true; return; }
+            if (!_fhs.readCollection(_courtHouse, worker)) { e.Cancel = true; return; }
 
-            e.Result = _courtHouse.getAllFamiliesText(0);
+            e.Result = "Processing Complete!";
         }
 
         private void BtnCancelClick(object sender, EventArgs e)
@@ -122,21 +124,30 @@ namespace _3DFamilyTreeForms
                 {
                     txtOutput.Clear();
                     txtOutput.AppendText("Background worker result: " + (string)e.Result);
-
+                    EnableOutputUI(true);
                 }
             }
 
-            EnableUI(true);
+            EnableStartUI(true);
 
         }
 
-        private void EnableUI(bool enable)
+        private void EnableStartUI(bool enable)
         {
             this.btnStart.Enabled = enable;
             this.startToolStripMenuItem.Enabled = enable;
           //  this.btnCancel.Enabled = !enable;
 
         }
+        private void EnableOutputUI(bool enable)
+        {
+            this.btnSaveAs.Enabled = enable;
+            this.saveToolStripMenuItem.Enabled = enable;
+            this.btnShowLog.Enabled = enable;
+            //  this.btnCancel.Enabled = !enable;
+
+        }
+
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -149,5 +160,21 @@ namespace _3DFamilyTreeForms
             aboutBoxForm.ShowDialog();
         }
 
+        private void btnSaveAs_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
+
+            _fhs.fileName = saveFileDialog1.FileName;
+            _fhs.isSaveToFile = true;
+            // Write to the file name selected.
+
+            File.WriteAllText(_fhs.fileName, _courtHouse.getAllFamiliesText(0));
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {
+            txtOutput.Clear();
+            txtOutput.AppendText(_courtHouse.getAllFamiliesText(0));
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -116,11 +117,7 @@ namespace _3DFamilyTreeForms
 
             if (VerifyID())
             {
-                txtFinalStatus.Text = "Save As not implemented yet.  Click Done to continue.";
-
-                tabWizard.SelectedIndex = (tabWizard.SelectedIndex + 1 < tabWizard.TabCount)
-                    ? tabWizard.SelectedIndex + 1
-                    : tabWizard.SelectedIndex;
+                DialogResult = DialogResult.OK;
             }
 
         }
@@ -155,27 +152,16 @@ namespace _3DFamilyTreeForms
             }
 
             btnPage2Next.Enabled = true;
-            btnVerify.Enabled = true;
+          
             return retStatus;
         }
 
-        private void btnDone_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-        }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             tabWizard.SelectedIndex = (tabWizard.SelectedIndex - 1 >= 0) ?
                             tabWizard.SelectedIndex - 1 : tabWizard.SelectedIndex;
         }
-        private void btnFinalPrevious_Click(object sender, EventArgs e)
-        {
-            tabWizard.SelectedIndex = (tabWizard.SelectedIndex - 1 >= 0) ?
-                tabWizard.SelectedIndex - 1 : tabWizard.SelectedIndex;
-
-        }
-
 
         private void btnVerify_Click(object sender, EventArgs e)
         {
@@ -199,5 +185,17 @@ namespace _3DFamilyTreeForms
 
         #endregion
 
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            // Get file name.
+            _fhs.fileName = saveFileDialog1.FileName;
+            _fhs.isSaveToFile = true;
+            DialogResult = DialogResult.OK;
+        }
+
+        private void txtStartingID_TextChanged(object sender, EventArgs e)
+        {
+            btnVerify.Enabled = true;
+        }
     }
 }

@@ -35,19 +35,22 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.about3DFamilyTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShowLog = new System.Windows.Forms.Button();
             this.btnSaveAs = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnOpenFile = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,24 +60,24 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOutput.Location = new System.Drawing.Point(18, 27);
+            this.txtOutput.Location = new System.Drawing.Point(18, 103);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(718, 262);
+            this.txtOutput.Size = new System.Drawing.Size(718, 186);
             this.txtOutput.TabIndex = 0;
             this.txtOutput.TabStop = false;
             // 
             // btnStart
             // 
-            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(23, 314);
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.Location = new System.Drawing.Point(416, 58);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(123, 39);
+            this.btnStart.Size = new System.Drawing.Size(100, 30);
             this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "Start";
+            this.btnStart.Text = "FamilySearch...";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.BtnStartClick);
             // 
@@ -82,16 +85,16 @@
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker1_RunWorkerCompleted);
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(613, 312);
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(636, 320);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(123, 38);
+            this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -112,41 +115,53 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.toolStripSeparator1,
             this.startToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.saveToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // saveToolStripMenuItem
+            // startToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveToolStripMenuItem.Text = "Save As...";
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.startToolStripMenuItem.Text = "FamilySearch Connect...";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.StartToolStripMenuItem_Click);
             // 
-            // exitToolStripMenuItem
+            // openToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.openToolStripMenuItem.Text = "Open File...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(95, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(198, 6);
             // 
-            // startToolStripMenuItem
+            // saveToolStripMenuItem
             // 
-            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.startToolStripMenuItem.Text = "Start";
-            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.saveToolStripMenuItem.Text = "Save As...";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click_1);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(198, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -161,59 +176,82 @@
             this.about3DFamilyTreeToolStripMenuItem.Name = "about3DFamilyTreeToolStripMenuItem";
             this.about3DFamilyTreeToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.about3DFamilyTreeToolStripMenuItem.Text = "About 3D Family Tree";
-            this.about3DFamilyTreeToolStripMenuItem.Click += new System.EventHandler(this.about3DFamilyTreeToolStripMenuItem_Click);
+            this.about3DFamilyTreeToolStripMenuItem.Click += new System.EventHandler(this.About3DFamilyTreeToolStripMenuItem_Click);
             // 
             // btnShowLog
             // 
             this.btnShowLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowLog.Location = new System.Drawing.Point(174, 314);
+            this.btnShowLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnShowLog.Location = new System.Drawing.Point(27, 320);
             this.btnShowLog.Name = "btnShowLog";
-            this.btnShowLog.Size = new System.Drawing.Size(123, 39);
+            this.btnShowLog.Size = new System.Drawing.Size(100, 30);
             this.btnShowLog.TabIndex = 3;
             this.btnShowLog.Text = "Show Log";
             this.btnShowLog.UseVisualStyleBackColor = true;
-            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            this.btnShowLog.Click += new System.EventHandler(this.BtnShowLog_Click);
             // 
             // btnSaveAs
             // 
             this.btnSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveAs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveAs.Location = new System.Drawing.Point(318, 314);
+            this.btnSaveAs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveAs.Location = new System.Drawing.Point(174, 320);
             this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new System.Drawing.Size(123, 39);
+            this.btnSaveAs.Size = new System.Drawing.Size(100, 30);
             this.btnSaveAs.TabIndex = 4;
             this.btnSaveAs.Text = "Save As...";
             this.btnSaveAs.UseVisualStyleBackColor = true;
-            this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.btnSaveAs.Click += new System.EventHandler(this.BtnSaveAs_Click);
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnOpenFile
+            // 
+            this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenFile.Location = new System.Drawing.Point(563, 58);
+            this.btnOpenFile.Name = "btnOpenFile";
+            this.btnOpenFile.Size = new System.Drawing.Size(100, 30);
+            this.btnOpenFile.TabIndex = 5;
+            this.btnOpenFile.Text = "Open File...";
+            this.btnOpenFile.UseVisualStyleBackColor = true;
+            this.btnOpenFile.Click += new System.EventHandler(this.BtnOpenFile_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(407, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(247, 16);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Choose your Familly History Source:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("MS Reference Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(312, 26);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Welcome to 3D Family Tree!";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 362);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnOpenFile);
             this.Controls.Add(this.btnSaveAs);
             this.Controls.Add(this.btnShowLog);
             this.Controls.Add(this.btnCancel);
@@ -247,10 +285,13 @@
         private System.Windows.Forms.Button btnShowLog;
         private System.Windows.Forms.Button btnSaveAs;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Button btnOpenFile;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

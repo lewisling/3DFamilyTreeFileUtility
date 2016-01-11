@@ -58,6 +58,8 @@ namespace UnityTreeScripts
             public int End;
         }
 
+        public TreePerson() : this(PersonType.Null, "", null) { }
+
         public TreePerson(PersonType Type, string idString = "", Person familySearchPerson = null)
         {
             switch (Type)
@@ -105,8 +107,8 @@ namespace UnityTreeScripts
                         // Just the basics of the person are set now
                         Name = familySearchPerson.DisplayExtension.Name;
                         Sex = GetSexEnum(familySearchPerson.DisplayExtension.Gender);                      
-                        Birth = familySearchPerson.DisplayExtension.BirthDate;
-                        Death = familySearchPerson.DisplayExtension.DeathDate;
+                        Birth = familySearchPerson.DisplayExtension.BirthDate ?? "";
+                        Death = familySearchPerson.DisplayExtension.DeathDate ?? "";
                         Lifespan = familySearchPerson.DisplayExtension.Lifespan;
                         _familySearchID = familySearchPerson.Id;
                     }

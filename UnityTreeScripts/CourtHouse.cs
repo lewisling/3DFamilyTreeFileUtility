@@ -17,9 +17,15 @@ namespace UnityTreeScripts
         public CourtHouse()
         {
             
+        }
+
+        public void init()
+        {
+            allFamilies.Clear();
             Family zeroFamily = new Family(0, 0, 0, "");
             addToAllFamilies(zeroFamily);
-                // This will serve as the root of the tree and Generation 0, Adam and Eve can be Generation 1
+            // This will serve as the root of the tree and Generation 0, Adam and Eve can be Generation 1
+            myPeople.init();
         }
 
 
@@ -28,7 +34,7 @@ namespace UnityTreeScripts
             Family myFamily = null;
             int familyIndex = -1;
 
-            FamilyEvent marriageevent = MakeMarriageEvent(treePersonIndex, treePersonSpouceIndex, year);
+            FamilyEvent marriageevent = MakeMarriageEvent(treePersonIndex, treePersonSpouceIndex, year ?? "");
             if (marriageevent != null)
             {
                 myFamily = new Family(marriageevent.Generation, marriageevent.BridePersonIndex,

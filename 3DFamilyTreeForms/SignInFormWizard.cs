@@ -112,11 +112,16 @@ namespace _3DFamilyTreeForms
                 }
             }
         }
-        private void btnPage2Next_Click(object sender, EventArgs e)
+        private void btnDone_Click(object sender, EventArgs e)
         {
 
             if (VerifyID())
             {
+                _fhs.startingID = txtStartingID.Text;
+                _fhs.isAncestry = rbtnAncestors.Checked;
+                _fhs.isDescendancy = rbtnDecendants.Checked;
+                _fhs.isBoth = rbtnBoth.Checked;                 
+                _fhs.numberOfGenerations = (int)numGenerations.Value;
                 DialogResult = DialogResult.OK;
             }
 
@@ -127,7 +132,7 @@ namespace _3DFamilyTreeForms
         {
             bool retStatus = false;
 
-            btnPage2Next.Enabled = false;
+            btnDone.Enabled = false;
             btnVerify.Enabled = false;
 
             HELPER_updateTextBox(txtResults, "Verifying...");
@@ -151,7 +156,7 @@ namespace _3DFamilyTreeForms
                 }
             }
 
-            btnPage2Next.Enabled = true;
+            btnDone.Enabled = true;
           
             return retStatus;
         }
@@ -196,6 +201,11 @@ namespace _3DFamilyTreeForms
         private void txtStartingID_TextChanged(object sender, EventArgs e)
         {
             btnVerify.Enabled = true;
+        }
+
+        private void lnkFSRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(lnkFSRegister.Text);
         }
     }
 }

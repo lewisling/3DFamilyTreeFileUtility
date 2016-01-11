@@ -38,6 +38,7 @@ namespace _3DFamilyTreeForms
         public int adamEveEndYear = 80;
 
         public string fileName = ""; // used for file read and save
+        public FileType fileType = FileType.Txt; // XML, JSON, TDFT
         public bool isReadFromFile = false;
         public bool isSaveToFile = false;
 
@@ -127,7 +128,6 @@ namespace _3DFamilyTreeForms
             throw new NotImplementedException("This connection type NOT IMPLEMENTED YET");
         }
 
-
         public bool readCollection(CourtHouse courtHouse, BackgroundWorker worker)
         {
 
@@ -186,6 +186,7 @@ namespace _3DFamilyTreeForms
 
 
         }
+
         private bool RecAddPersonsFamily(PersonState personState, int treePersonIndex, int generation = 1)
         {
             //Person must already be added to CourtHouse
@@ -250,6 +251,14 @@ namespace _3DFamilyTreeForms
             FamilySearchService,
             RandomAdamEvePopulation,
             ReadFromFile
+        }
+
+        public enum FileType
+        {
+            Txt,
+            Xml,
+            Json,
+            Tdft
         }
     }
 }

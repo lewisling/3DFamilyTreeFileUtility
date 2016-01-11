@@ -9,7 +9,7 @@ namespace UnityTreeScripts
         public int Generation;
         public int BridePersonIndex;
         public int GroomPersonIndex;
-        public string MarriageDate;
+        public string MarriageDate = "";
         public List<int> ChildrenPersonIndexList;
 
         private static int _childBearingAge = 49;
@@ -25,6 +25,15 @@ namespace UnityTreeScripts
         /// Give me the list of up generation families (where the children married into)
         /// Give me the list of side generation families (marriage, adoption)
 
+        public Family() : this(0, 0, 0, "") { }
+
+        /// <summary>
+        /// Defines the base unit Family with a bride, groom, marriage date and a list of children
+        /// </summary>
+        /// <param name="generation">What generation this family is relative to the 'startingID' of this descendancy</param>
+        /// <param name="bridePersonIndex">Index into MyPeople of the Bride</param>
+        /// <param name="groomPersonIndex">Index into MyPeople of the Groom</param>
+        /// <param name="marriageDate">A string representation of thier marriage date</param>
         public Family(int generation, int bridePersonIndex, int groomPersonIndex, string marriageDate)
         {
             Generation = generation;
@@ -34,6 +43,8 @@ namespace UnityTreeScripts
             ChildrenPersonIndexList = new List<int>();
 
         }
+
+
 
 #if NOTNOW
         public bool BabyTime(int currentYear)

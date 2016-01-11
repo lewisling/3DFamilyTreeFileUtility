@@ -42,13 +42,14 @@ namespace _3DFamilyTreeForms
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabWizard = new System.Windows.Forms.TabControl();
             this.tabSignIn = new System.Windows.Forms.TabPage();
+            this.lnkFSRegister = new System.Windows.Forms.LinkLabel();
             this.txtInstructions = new System.Windows.Forms.TextBox();
             this.tabStartingID = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnVerify = new System.Windows.Forms.Button();
             this.txtStartingID = new System.Windows.Forms.TextBox();
             this.btnPrevious = new System.Windows.Forms.Button();
-            this.btnPage2Next = new System.Windows.Forms.Button();
+            this.btnDone = new System.Windows.Forms.Button();
             this.lblLoginSuccess = new System.Windows.Forms.Label();
             this.txtClient = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -176,6 +177,7 @@ namespace _3DFamilyTreeForms
             // 
             // tabSignIn
             // 
+            this.tabSignIn.Controls.Add(this.lnkFSRegister);
             this.tabSignIn.Controls.Add(this.txtInstructions);
             this.tabSignIn.Controls.Add(this.txtStatus);
             this.tabSignIn.Controls.Add(this.label3);
@@ -194,6 +196,18 @@ namespace _3DFamilyTreeForms
             this.tabSignIn.Text = "Sign In";
             this.tabSignIn.UseVisualStyleBackColor = true;
             // 
+            // lnkFSRegister
+            // 
+            this.lnkFSRegister.AutoSize = true;
+            this.lnkFSRegister.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkFSRegister.Location = new System.Drawing.Point(47, 111);
+            this.lnkFSRegister.Name = "lnkFSRegister";
+            this.lnkFSRegister.Size = new System.Drawing.Size(231, 16);
+            this.lnkFSRegister.TabIndex = 9;
+            this.lnkFSRegister.TabStop = true;
+            this.lnkFSRegister.Text = "https://familysearch.org/register/";
+            this.lnkFSRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkFSRegister_LinkClicked);
+            // 
             // txtInstructions
             // 
             this.txtInstructions.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -204,14 +218,14 @@ namespace _3DFamilyTreeForms
             this.txtInstructions.Size = new System.Drawing.Size(256, 93);
             this.txtInstructions.TabIndex = 0;
             this.txtInstructions.TabStop = false;
-            this.txtInstructions.Text = "Sign in with your Family Search username and password. Don\'t have an account?  Re" +
-    "gister at https://familysearch.org/register/";
+            this.txtInstructions.Text = "Sign in with your Family Search username and password.  \r\nDon\'t have an account? " +
+    " Register at:";
             // 
             // tabStartingID
             // 
             this.tabStartingID.Controls.Add(this.groupBox3);
             this.tabStartingID.Controls.Add(this.btnPrevious);
-            this.tabStartingID.Controls.Add(this.btnPage2Next);
+            this.tabStartingID.Controls.Add(this.btnDone);
             this.tabStartingID.Controls.Add(this.lblLoginSuccess);
             this.tabStartingID.Controls.Add(this.txtClient);
             this.tabStartingID.Controls.Add(this.label6);
@@ -272,15 +286,15 @@ namespace _3DFamilyTreeForms
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
-            // btnPage2Next
+            // btnDone
             // 
-            this.btnPage2Next.Location = new System.Drawing.Point(250, 310);
-            this.btnPage2Next.Name = "btnPage2Next";
-            this.btnPage2Next.Size = new System.Drawing.Size(75, 23);
-            this.btnPage2Next.TabIndex = 6;
-            this.btnPage2Next.Text = "Next >>";
-            this.btnPage2Next.UseVisualStyleBackColor = true;
-            this.btnPage2Next.Click += new System.EventHandler(this.btnPage2Next_Click);
+            this.btnDone.Location = new System.Drawing.Point(250, 310);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(75, 23);
+            this.btnDone.TabIndex = 6;
+            this.btnDone.Text = "Done";
+            this.btnDone.UseVisualStyleBackColor = true;
+            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
             // lblLoginSuccess
             // 
@@ -542,7 +556,7 @@ namespace _3DFamilyTreeForms
         private System.Windows.Forms.NumericUpDown numGenerations;
         private System.Windows.Forms.TextBox txtResults;
         private System.Windows.Forms.Button btnPrevious;
-        private System.Windows.Forms.Button btnPage2Next;
+        private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbtnBoth;
         private System.Windows.Forms.RadioButton rbtnDecendants;
@@ -554,5 +568,6 @@ namespace _3DFamilyTreeForms
         private TextBox txtInstructions;
         private Button btnVerify;
         private SaveFileDialog saveFileDialog1;
+        public LinkLabel lnkFSRegister;
     }
 }

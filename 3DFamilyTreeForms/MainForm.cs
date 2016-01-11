@@ -1,35 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using FamilySearch.Api.Ft;
-using FamilySearch.Api.Util;
-using Gx.Conclusion;
-using Gx.Links;
-using Gx.Rs.Api;
-using Gx.Rs.Api.Options;
-using Gx.Rs.Api.Util;
-using Gx.Types;
+using System.Xml;
+using System.Xml.Serialization;
 using UnityTreeScripts;
 
-
-//TODO Collect Authentication information from user
 //TODO Get This information from the Actual FamilySearch sight - not just the SandBox
 
 namespace _3DFamilyTreeForms
 {
     public partial class MainForm : Form
     {
-
         //private FamilySearchFamilyTree tree;
         private CourtHouse _courtHouse = null;
+        //private Family History Source - can refer to several types of Family Histroy Sources
         private FamilyHistorySource _fhs = null;
 
         public MainForm()
@@ -38,23 +23,24 @@ namespace _3DFamilyTreeForms
 
             _fhs = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
 
-            EnableOutputUI(false);
+            HELPER_EnableOutputUI(false);
             txtOutput.Text = "Welcome to 3D Family Tree!  Click Start to get going.";
             btnStart.Focus();
 
         }
 
+        #region Family Search 
         private void BtnStartClick(object sender, EventArgs e)
         {
             txtOutput.Text = "Let's get started!";
-            EnableStartUI(false);
+            HELPER_EnableStartUI(false);
             StartFamilySearchConnection();
         }
 
-        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             txtOutput.Text = "Let's get started!";
-            EnableStartUI(false);
+            HELPER_EnableStartUI(false);
             StartFamilySearchConnection();
 
         }
@@ -68,20 +54,143 @@ namespace _3DFamilyTreeForms
             {
 
                 txtOutput.Text = "Collecting Results, please wait...";
+                _courtHouse.init();
                 backgroundWorker1.RunWorkerAsync();
- 
+
 
             }
             else
             {
                 txtOutput.Text = "Canceled Sign in.";
 
-                EnableStartUI(true);
+                HELPER_EnableStartUI(true);
             }
 
         }
+        #endregion
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        #region Open File
+        private void BtnOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        public void OpenFile()
+        {
+            _courtHouse = new CourtHouse();
+            txtOutput.Text = "Lets go get that file, shall we?";
+
+            openFileDialog1.Filter = "Xml Doc (*.xml)|*.xml|Text (*.txt)|*.txt";
+            openFileDialog1.AddExtension = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Construct an instance of the XmlSerializer with the type
+                // of object that is being deserialized.
+                XmlSerializer serializer = new XmlSerializer(_courtHouse.GetType());
+                // To read the file, create a FileStream.
+                FileStream myFileStream = new FileStream(openFileDialog1.FileName, FileMode.Open);
+                // Call the Deserialize method and cast to the object type.
+                _courtHouse = (CourtHouse) serializer.Deserialize(myFileStream);
+
+                myFileStream.Close();
+                txtOutput.Clear();
+                txtOutput.AppendText(string.Format("Read in {0} Families, and {1} Individuals",
+                    _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
+                HELPER_EnableOutputUI(true);
+            }
+            else
+            {
+                txtOutput.Clear();
+                txtOutput.AppendText("Open File, Canceled.");
+
+            }  
+
+        }
+        #endregion
+
+        #region Save As
+        private void BtnSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveAs();
+
+        }
+
+        private void SaveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            SaveAs();
+        }
+
+        private void SaveAs()
+        {
+
+            saveFileDialog1.FileName = _fhs.username + " "
+                                       + _fhs.startingID + " "
+                                       + _fhs.numberOfGenerations + " generations";
+            saveFileDialog1.Filter = "Xml Doc (*.xml)|*.xml|Text (*.txt)|*.txt";
+            saveFileDialog1.AddExtension = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+
+                _fhs.fileName = saveFileDialog1.FileName;
+                var filetype = saveFileDialog1.DefaultExt;
+
+                _fhs.isSaveToFile = true;
+                // Write to the file name selected.
+
+                XmlSerializer serializer = new XmlSerializer(_courtHouse.GetType());
+
+                var ns = new System.Xml.Serialization.XmlSerializerNamespaces();
+                ns.Add(String.Empty, String.Empty);
+
+                var settings = new XmlWriterSettings { Indent = true, IndentChars = "\t", CloseOutput = true };
+
+                using (var writer = XmlWriter.Create(File.Create(_fhs.fileName), settings))
+                {
+
+                    serializer.Serialize(writer, _courtHouse, ns);
+                }
+                txtOutput.Clear();
+                txtOutput.AppendText(string.Format("Wrote to file {0} Families, and {1} Individuals",
+                    _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
+            }
+            else
+            {
+                txtOutput.Clear();
+                txtOutput.AppendText("Save to file canceled.");
+
+            }
+        }
+        #endregion
+
+        #region Other Quick/Simple Button Click Methods
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void About3DFamilyTreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form aboutBoxForm = new AboutBox1();
+            aboutBoxForm.ShowDialog();
+        }
+
+        private void BtnShowLog_Click(object sender, EventArgs e)
+        {
+            txtOutput.Clear();
+            txtOutput.AppendText(_courtHouse.getAllFamiliesText(0));
+        }
+        #endregion
+
+        #region Backgroud Worker for long Family Search transactions
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             
@@ -104,7 +213,7 @@ namespace _3DFamilyTreeForms
             }
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
             {
@@ -124,22 +233,27 @@ namespace _3DFamilyTreeForms
                 {
                     txtOutput.Clear();
                     txtOutput.AppendText("Background worker result: " + (string)e.Result);
-                    EnableOutputUI(true);
+                    HELPER_EnableOutputUI(true);
                 }
             }
 
-            EnableStartUI(true);
+            HELPER_EnableStartUI(true);
 
         }
+        #endregion
 
-        private void EnableStartUI(bool enable)
+        #region HELPERs
+        private void HELPER_EnableStartUI(bool enable)
         {
             this.btnStart.Enabled = enable;
+            this.btnOpenFile.Enabled = enable;
             this.startToolStripMenuItem.Enabled = enable;
-          //  this.btnCancel.Enabled = !enable;
+            this.openToolStripMenuItem.Enabled = enable;
+            //  this.btnCancel.Enabled = !enable;
 
         }
-        private void EnableOutputUI(bool enable)
+
+        private void HELPER_EnableOutputUI(bool enable)
         {
             this.btnSaveAs.Enabled = enable;
             this.saveToolStripMenuItem.Enabled = enable;
@@ -147,34 +261,6 @@ namespace _3DFamilyTreeForms
             //  this.btnCancel.Enabled = !enable;
 
         }
-
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void about3DFamilyTreeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form aboutBoxForm = new AboutBox1();
-            aboutBoxForm.ShowDialog();
-        }
-
-        private void btnSaveAs_Click(object sender, EventArgs e)
-        {
-            saveFileDialog1.ShowDialog();
-
-            _fhs.fileName = saveFileDialog1.FileName;
-            _fhs.isSaveToFile = true;
-            // Write to the file name selected.
-
-            File.WriteAllText(_fhs.fileName, _courtHouse.getAllFamiliesText(0));
-        }
-
-        private void btnShowLog_Click(object sender, EventArgs e)
-        {
-            txtOutput.Clear();
-            txtOutput.AppendText(_courtHouse.getAllFamiliesText(0));
-        }
+        #endregion
     }
 }

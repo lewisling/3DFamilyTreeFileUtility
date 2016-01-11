@@ -14,6 +14,11 @@ namespace UnityTreeScripts
             allPeople = new List<TreePerson>();
         }
 
+        public void init()
+        {
+            allPeople.Clear();
+        }
+
         public void Add(TreePerson newPerson)
         {
 

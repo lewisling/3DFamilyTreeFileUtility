@@ -59,7 +59,7 @@
             this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutput.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOutput.Location = new System.Drawing.Point(18, 103);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
@@ -174,8 +174,8 @@
             // about3DFamilyTreeToolStripMenuItem
             // 
             this.about3DFamilyTreeToolStripMenuItem.Name = "about3DFamilyTreeToolStripMenuItem";
-            this.about3DFamilyTreeToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.about3DFamilyTreeToolStripMenuItem.Text = "About 3D Family Tree";
+            this.about3DFamilyTreeToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.about3DFamilyTreeToolStripMenuItem.Text = "About 3D Family Tree - File Utility";
             this.about3DFamilyTreeToolStripMenuItem.Click += new System.EventHandler(this.About3DFamilyTreeToolStripMenuItem_Click);
             // 
             // btnShowLog
@@ -236,9 +236,9 @@
             this.label2.Font = new System.Drawing.Font("MS Reference Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(18, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(312, 26);
+            this.label2.Size = new System.Drawing.Size(301, 26);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Welcome to 3D Family Tree!";
+            this.label2.Text = "3D Family Tree - File Utility";
             // 
             // openFileDialog1
             // 
@@ -260,7 +260,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "3D Family Tree";
+            this.Text = "3D Family Tree - File Utility";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

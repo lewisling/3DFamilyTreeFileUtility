@@ -24,7 +24,7 @@ namespace _3DFamilyTreeForms
             _fhs = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
 
             HELPER_EnableOutputUI(false);
-            txtOutput.Text = "Welcome to 3D Family Tree!  Click Start to get going.";
+            txtOutput.Text = "Welcome to the 3D Family Tree File Utility  This utility will help you create the Family History data file needed for 3D Family Tree.";
             btnStart.Focus();
 
         }

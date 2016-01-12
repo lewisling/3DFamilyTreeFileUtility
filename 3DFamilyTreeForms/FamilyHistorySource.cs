@@ -68,6 +68,8 @@ namespace _3DFamilyTreeForms
                     username = config.AppSettings.Settings["username"].Value;
                     password = config.AppSettings.Settings["password"].Value;
                     developerKey = config.AppSettings.Settings["developerKey"].Value;
+                    if (developerKey == null || developerKey == "")
+                        MessageBox.Show(string.Format("No 'Developer Key' found in {0}", familySearchConfigFile));
                     startingID = config.AppSettings.Settings["startingID"].Value;
 
                     break;

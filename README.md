@@ -2,12 +2,20 @@
 For now, this is simply the file utility that creates a Family History Data File that the 3D Application will use to read in the
 Family History information that will be mapped into the 3D world.
 
+About this project:
+This solution was created using Microsoft Visual Studio 2015, and requires the FamilySearch & Gedcomx API SDK.
+I am importing these as NuGet packages.
+
+The FamilySearch.config file contains defaults for the Family Search Authentication.
+The only required field is the "developerKey" field. Other fields are here as a convenience to set up defaults. 
+ 
+
 --- 
 Over all Concept:
 ---
 
 Walk, Jump, and Play through your family history!  
-3D Family Tree gives a new twist to family history which makes it more personal, approachable  and immersive.
+3D Family Tree gives a new twist to family history which makes it more personal, approachable and immersive.
 
 Try A VERY EARLY PROTOTYPE here: www.shuskey.com/3dtree/
 
@@ -57,7 +65,7 @@ Pickup & Throw Objects:
 
 BACK STORY:
 I was recently asked to be a Boy Scout Merit Badge Counselor for the new “Game Design” merit badge.  This was very interesting to me 
-because of my background in game design.  I developed and sold several computer games back in the 80’s for the Atarti ST and the 
+because of my background in game design.  I developed and sold several computer games back in the 80’s for the Atari ST and the 
 Apple II (Yeah pretty 8-bit retro, for sure!).
 
 Anyways, I found that one of the current game developing platforms is called “Unity 3D”.  This is a cross-platform game engine with 
@@ -65,7 +73,7 @@ over one million developers.
 
 Expecting that I would need to teach this to some Boy Scouts, I dove in and created and simple car that I drove around my simulated 
 world.  I then ‘re-created’ one of the ‘retro’ games that ran on the Apple II called Flip-Out.  It came together pretty quickly, and 
-I was very impressed with the physics engine that allows you create your objects and let them interact with each other just they way 
+I was very impressed with the physics engine that allows you create your objects and let them interact with each other just the way 
 they would in the real world.
 
 Unity has an awesome “Asset Store” modeled after the Apple “App Store”.  I found a cool “Physics Platform” template – That really 
@@ -77,12 +85,12 @@ started creating a static demo of a 3D Family Tree world that my avatar could wa
 Are you still reading?
 January 2015 update:
 I have been working over the holidays getting the Family Search GEDCOMx API connected into my Visual Studio C# development environment.
-I've started with the inital C# Scripts that I created in Unity3D for the inital demo, and started to merge the two.
+I've started with the initial C# Scripts that I created in Unity3D for the initial demo, and started to merge the two.
 
 I now have made contact with the FamilySearch Sandbox, and am reading in Family Groups into the format I'll use to populate the 3D
 world.
 
 In order for you to get this to work, you will need a Developer Key and a Sandbox Login to www.FamilySearch.org
 
-This is just my initial checkin.  I am starting to be concerned about source code and version control, and just the sanity of having a
+This is just my initial check-in.  I am starting to be concerned about source code and version control, and just the sanity of having a
 master copy of this somewhere besides just on my computer.

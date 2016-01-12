@@ -1,4 +1,11 @@
-# 3DFamilyTree
+# 3DFamilyTree - File Utility
+For now, this is simply the file utility that creates a Family History Data File that the 3D Application will use to read in the
+Family History information that will be mapped into the 3D world.
+
+--- 
+Over all Concept:
+---
+
 Walk, Jump, and Play through your family history!  
 3D Family Tree gives a new twist to family history which makes it more personal, approachable  and immersive.
 

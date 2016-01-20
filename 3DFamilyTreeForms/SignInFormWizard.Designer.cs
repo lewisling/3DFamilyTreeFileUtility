@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     partial class SignInFormWizard
     {
@@ -31,18 +31,18 @@ namespace _3DFamilyTreeForms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SignInFormWizard));
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSignIn = new System.Windows.Forms.Button();
             this.txtStatus = new System.Windows.Forms.TextBox();
-            this.chkSandbox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabWizard = new System.Windows.Forms.TabControl();
             this.tabSignIn = new System.Windows.Forms.TabPage();
-            this.lnkFSRegister = new System.Windows.Forms.LinkLabel();
+            this.lblSandbox = new System.Windows.Forms.Label();
             this.txtInstructions = new System.Windows.Forms.TextBox();
             this.tabStartingID = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -79,14 +79,14 @@ namespace _3DFamilyTreeForms
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(81, 176);
+            this.txtUsername.Location = new System.Drawing.Point(81, 66);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(181, 20);
             this.txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(81, 226);
+            this.txtPassword.Location = new System.Drawing.Point(81, 110);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(181, 20);
@@ -96,7 +96,7 @@ namespace _3DFamilyTreeForms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(81, 157);
+            this.label1.Location = new System.Drawing.Point(81, 47);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -105,7 +105,7 @@ namespace _3DFamilyTreeForms
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(81, 207);
+            this.label2.Location = new System.Drawing.Point(81, 91);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 3;
@@ -130,27 +130,15 @@ namespace _3DFamilyTreeForms
             this.txtStatus.TabIndex = 0;
             this.txtStatus.TabStop = false;
             // 
-            // chkSandbox
-            // 
-            this.chkSandbox.AutoSize = true;
-            this.chkSandbox.Checked = true;
-            this.chkSandbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSandbox.Location = new System.Drawing.Point(128, 269);
-            this.chkSandbox.Name = "chkSandbox";
-            this.chkSandbox.Size = new System.Drawing.Size(90, 17);
-            this.chkSandbox.TabIndex = 3;
-            this.chkSandbox.Text = "Use Sandbox";
-            this.chkSandbox.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("MS Reference Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(33, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(263, 26);
+            this.label3.Size = new System.Drawing.Size(261, 26);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Sign In to FamilySearch";
+            this.label3.Text = "Sign in to FamilySearch";
             // 
             // btnCancel
             // 
@@ -177,14 +165,13 @@ namespace _3DFamilyTreeForms
             // 
             // tabSignIn
             // 
-            this.tabSignIn.Controls.Add(this.lnkFSRegister);
+            this.tabSignIn.Controls.Add(this.lblSandbox);
             this.tabSignIn.Controls.Add(this.txtInstructions);
             this.tabSignIn.Controls.Add(this.txtStatus);
             this.tabSignIn.Controls.Add(this.label3);
             this.tabSignIn.Controls.Add(this.btnCancel);
             this.tabSignIn.Controls.Add(this.txtUsername);
             this.tabSignIn.Controls.Add(this.txtPassword);
-            this.tabSignIn.Controls.Add(this.chkSandbox);
             this.tabSignIn.Controls.Add(this.label1);
             this.tabSignIn.Controls.Add(this.label2);
             this.tabSignIn.Controls.Add(this.btnSignIn);
@@ -196,30 +183,27 @@ namespace _3DFamilyTreeForms
             this.tabSignIn.Text = "Sign In";
             this.tabSignIn.UseVisualStyleBackColor = true;
             // 
-            // lnkFSRegister
+            // lblSandbox
             // 
-            this.lnkFSRegister.AutoSize = true;
-            this.lnkFSRegister.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkFSRegister.Location = new System.Drawing.Point(47, 111);
-            this.lnkFSRegister.Name = "lnkFSRegister";
-            this.lnkFSRegister.Size = new System.Drawing.Size(231, 16);
-            this.lnkFSRegister.TabIndex = 9;
-            this.lnkFSRegister.TabStop = true;
-            this.lnkFSRegister.Text = "https://familysearch.org/register/";
-            this.lnkFSRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkFSRegister_LinkClicked);
+            this.lblSandbox.AutoSize = true;
+            this.lblSandbox.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSandbox.Location = new System.Drawing.Point(262, 37);
+            this.lblSandbox.Name = "lblSandbox";
+            this.lblSandbox.Size = new System.Drawing.Size(71, 16);
+            this.lblSandbox.TabIndex = 9;
+            this.lblSandbox.Text = "Sandbox";
             // 
             // txtInstructions
             // 
             this.txtInstructions.Font = new System.Drawing.Font("MS Reference Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInstructions.Location = new System.Drawing.Point(39, 51);
+            this.txtInstructions.Location = new System.Drawing.Point(25, 149);
             this.txtInstructions.Multiline = true;
             this.txtInstructions.Name = "txtInstructions";
             this.txtInstructions.ReadOnly = true;
-            this.txtInstructions.Size = new System.Drawing.Size(256, 93);
+            this.txtInstructions.Size = new System.Drawing.Size(300, 141);
             this.txtInstructions.TabIndex = 0;
             this.txtInstructions.TabStop = false;
-            this.txtInstructions.Text = "Sign in with your Family Search username and password.  \r\nDon\'t have an account? " +
-    " Register at:";
+            this.txtInstructions.Text = resources.GetString("txtInstructions.Text");
             // 
             // tabStartingID
             // 
@@ -424,6 +408,7 @@ namespace _3DFamilyTreeForms
             // rbtnBoth
             // 
             this.rbtnBoth.AutoSize = true;
+            this.rbtnBoth.Enabled = false;
             this.rbtnBoth.Location = new System.Drawing.Point(18, 69);
             this.rbtnBoth.Name = "rbtnBoth";
             this.rbtnBoth.Size = new System.Drawing.Size(47, 17);
@@ -446,6 +431,7 @@ namespace _3DFamilyTreeForms
             // rbtnAncestors
             // 
             this.rbtnAncestors.AutoSize = true;
+            this.rbtnAncestors.Enabled = false;
             this.rbtnAncestors.Location = new System.Drawing.Point(18, 23);
             this.rbtnAncestors.Name = "rbtnAncestors";
             this.rbtnAncestors.Size = new System.Drawing.Size(72, 17);
@@ -538,7 +524,6 @@ namespace _3DFamilyTreeForms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSignIn;
         private System.Windows.Forms.TextBox txtStatus;
-        private System.Windows.Forms.CheckBox chkSandbox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TabControl tabWizard;
@@ -568,6 +553,6 @@ namespace _3DFamilyTreeForms
         private TextBox txtInstructions;
         private Button btnVerify;
         private SaveFileDialog saveFileDialog1;
-        public LinkLabel lnkFSRegister;
+        private Label lblSandbox;
     }
 }

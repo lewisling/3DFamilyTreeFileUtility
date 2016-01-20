@@ -8,7 +8,7 @@ using UnityTreeScripts;
 
 //TODO Get This information from the Actual FamilySearch sight - not just the SandBox
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     public partial class MainForm : Form
     {
@@ -22,9 +22,10 @@ namespace _3DFamilyTreeForms
             InitializeComponent();
 
             _fhs = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
-
+            
             HELPER_EnableOutputUI(false);
-            txtOutput.Text = "Welcome to the 3D Family Tree File Utility  This utility will help you create the Family History data file needed for 3D Family Tree.";
+            HELPER_EnableStartUI(true);
+            txtOutput.Text = "Welcome to the '3D Family Tree File Utility'." + System.Environment.NewLine + "This utility will help you create the Family History data file needed for 3D Family Tree.";
             btnStart.Focus();
 
         }
@@ -198,7 +199,7 @@ namespace _3DFamilyTreeForms
             
             if (!_fhs.readCollection(_courtHouse, worker)) { e.Cancel = true; return; }
 
-            e.Result = "Processing Complete!";
+            e.Result = "Processing Complete!" + System.Environment.NewLine + "Click the 'Save As' button below to save this data in the '3D FamilyTree' File format.";
         }
 
         private void BtnCancelClick(object sender, EventArgs e)
@@ -249,6 +250,7 @@ namespace _3DFamilyTreeForms
             this.btnOpenFile.Enabled = enable;
             this.startToolStripMenuItem.Enabled = enable;
             this.openToolStripMenuItem.Enabled = enable;
+            this.btnCancel.Text = enable ? "Exit" : "Cancel";
             //  this.btnCancel.Enabled = !enable;
 
         }

@@ -18,7 +18,7 @@ using Gx.Rs.Api.Options;
 using Gx.Rs.Api.Util;
 using UnityTreeScripts;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     public class FamilyHistorySource
     {
@@ -26,7 +26,7 @@ namespace _3DFamilyTreeForms
         public string description = "";
         public string username = "";
         public string password = "";
-        public string developerKey = "";
+        public string appKey = "";
         public bool isFamilySearch = false;
         public bool isSandBox = false;
         public bool isDescendancy = false;
@@ -46,6 +46,9 @@ namespace _3DFamilyTreeForms
 
         private CourtHouse _courtHouse;
         private BackgroundWorker _worker;
+        // The next two variables will be read from the FamilySearch.config file if _developerKey is set to "READ FROM CONFIG FILE"
+        private string _appKey = "READ FROM CONFIG FILE"; 
+        private bool _isSandBox = true;
 
         public FamilyHistorySource(SourceType sourceType)
         {
@@ -64,12 +67,26 @@ namespace _3DFamilyTreeForms
                     isAncestry = false;
                     isBoth = false;
 
-                    isSandBox = config.AppSettings.Settings["isSandBox"].Value.ToLower().Contains("true");
+                    // this used to come in from the config file, but now we will bake this in
+                    //isSandBox = config.AppSettings.Settings["isSandBox"].Value.ToLower().Contains("true");
+                    //developerKey = config.AppSettings.Settings["developerKey"].Value;
+
+                    if (_appKey == "" || _appKey.ToLower().Contains("read from config file"))
+                    {
+                        appKey = config.AppSettings.Settings["appKey"].Value;
+                        isSandBox = config.AppSettings.Settings["isSandBox"].Value.ToLower().Contains("true");
+                    }
+                    else
+                    {
+                        isSandBox = _isSandBox;
+                        appKey = _appKey;
+                    }
+
                     username = config.AppSettings.Settings["username"].Value;
                     password = config.AppSettings.Settings["password"].Value;
-                    developerKey = config.AppSettings.Settings["developerKey"].Value;
-                    if (developerKey == null || developerKey == "")
-                        MessageBox.Show(string.Format("No 'Developer Key' found in {0}", familySearchConfigFile));
+
+                    if (string.IsNullOrEmpty(appKey))
+                        MessageBox.Show(string.Format("No 'App Key' found in {0}", familySearchConfigFile));
                     startingID = config.AppSettings.Settings["startingID"].Value;
 
                     break;
@@ -112,8 +129,8 @@ namespace _3DFamilyTreeForms
                 if (ft == null)
                     ft = new FamilySearchFamilyTree(isSandBox); // true means sandbox reference. 
           
-                Form signInForm = new SignInFormWizard(this, ft, username, password, developerKey);
-   
+                Form signInForm = new SignInFormWizard(this, ft, username, password, appKey);
+           
                 var dialogRet = signInForm.ShowDialog();
 
                 if (dialogRet == DialogResult.Cancel)

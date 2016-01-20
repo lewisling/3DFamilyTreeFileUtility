@@ -1,14 +1,12 @@
-using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using FamilySearch.Api.Ft;
 using Gx.Conclusion;
-using JetBrains.Annotations;
 
 namespace UnityTreeScripts
 {
     public class TreePerson
     {
+        private Random rnd = new Random();
         private readonly Person _familSearchPerson = null;
         private readonly string _familySearchID = "";
         public string Name = "";
@@ -71,16 +69,16 @@ namespace UnityTreeScripts
                     break;
 
                 case PersonType.Unique:
-                    if (Random.Range(0, 2) == 0)
+                    if (rnd.Next(0, 2) == 0)
                     {
                         Sex = PersonSex.Male;
-                        Name = MaleNames[Random.Range(0, MaleNames.Length)];
+                        Name = MaleNames[rnd.Next(0, MaleNames.Length)];
                         Birth = idString;
                     }
                     else
                     {
                         Sex = PersonSex.Female;
-                        Name = FemaleNames[Random.Range(0, FemaleNames.Length)];
+                        Name = FemaleNames[rnd.Next(0, FemaleNames.Length)];
                         Birth = idString;
                     }
                     break;
@@ -140,7 +138,7 @@ namespace UnityTreeScripts
         {
             bool retAnswer = false;
 
-            int iRand = Random.Range(0, 10);
+            int iRand = rnd.Next(0, 10);
             if (iRand > 3) retAnswer = true;
             //Debug.Log (Name + " Got asked to Marry. iRand =" + iRand.ToString());
             //Debug.Log ("She said " + (retAnswer ? "Yes" : "No") + "!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -150,7 +148,7 @@ namespace UnityTreeScripts
         public bool isDeathEvent(int mortalityRate, int currentYear) // Chance out of 100000
         {
             bool retAnswer = false;
-            int iRand = Random.Range(0, 100000);
+            int iRand = rnd.Next(0, 100000);
             if (iRand < mortalityRate)
             {
                 retAnswer = true;

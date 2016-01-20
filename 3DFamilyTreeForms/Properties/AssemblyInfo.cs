@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("3DFamilyTree")]
-[assembly: AssemblyDescription("This utility will help you create a Family History Data file that is used by 3D Family Tree.")]
+[assembly: AssemblyDescription("This utility will help you create a Family History data file that is used by 3D Family Tree.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Scott Huskey Engineering")]
 [assembly: AssemblyProduct("3D Family Tree - File Utility")]

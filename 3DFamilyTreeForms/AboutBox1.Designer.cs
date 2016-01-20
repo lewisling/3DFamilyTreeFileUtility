@@ -1,4 +1,4 @@
-﻿namespace _3DFamilyTreeForms
+﻿namespace _3DFamilyTreeFileUtility
 {
     partial class AboutBox1
     {

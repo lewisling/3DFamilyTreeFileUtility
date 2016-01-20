@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     partial class AboutBox1 : Form
     {

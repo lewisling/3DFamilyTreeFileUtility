@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.IO;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     /// <summary>
     /// Reads customer configuration file

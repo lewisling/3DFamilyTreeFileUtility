@@ -14,7 +14,7 @@ using FamilySearch.Api.Ft;
 using Gx.Rs.Api;
 using Newtonsoft.Json.Linq;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     public partial class SignInFormWizard : Form
     {
@@ -33,6 +33,7 @@ namespace _3DFamilyTreeForms
             _developerKey = developerKey;
             _ft = ft;
             InitializeComponent();
+            lblSandbox.Visible = _fhs.isSandBox;
             txtUsername.Text = _username;
             txtPassword.Text = _password;
         }
@@ -40,12 +41,6 @@ namespace _3DFamilyTreeForms
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            if (!chkSandbox.Checked)
-            {
-                txtStatus.Text = "NON Sandbox access NOT IMPLEMENTED YET";
-                return;
-            }
-
             if ((txtUsername.Text == "") || (txtPassword.Text == ""))
             {
                 txtStatus.Text = "A username and password are required.";
@@ -203,9 +198,5 @@ namespace _3DFamilyTreeForms
             btnVerify.Enabled = true;
         }
 
-        private void lnkFSRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(lnkFSRegister.Text);
-        }
     }
 }

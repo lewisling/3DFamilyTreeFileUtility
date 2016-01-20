@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using FamilySearch.Api.Ft;
 using Gx.Conclusion;
 
 namespace UnityTreeScripts

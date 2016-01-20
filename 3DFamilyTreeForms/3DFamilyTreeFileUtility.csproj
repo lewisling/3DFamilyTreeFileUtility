@@ -7,8 +7,8 @@
     <ProjectGuid>{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>_3DFamilyTreeForms</RootNamespace>
-    <AssemblyName>3DFamilyTreeForms</AssemblyName>
+    <RootNamespace>_3DFamilyTreeFileUtility</RootNamespace>
+    <AssemblyName>3DFamilyTreeFileUtility</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -71,10 +71,6 @@
     </Reference>
     <Reference Include="Link, Version=1.0.5422.31547, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gedcomx.API.SDK.1.0.5422.31548\lib\net45\Link.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -143,6 +139,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SignInFormWizard.resx">
       <DependentUpon>SignInFormWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -152,6 +149,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="FamilySearch.config">
       <SubType>Designer</SubType>

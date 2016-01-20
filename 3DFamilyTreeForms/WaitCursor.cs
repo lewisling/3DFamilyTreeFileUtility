@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _3DFamilyTreeForms
+namespace _3DFamilyTreeFileUtility
 {
     /// <summary> Displays a wait cursor while an instance is in scope. </summary>
     public class WaitCursor : IDisposable

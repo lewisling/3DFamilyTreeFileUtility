@@ -108,6 +108,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3DFamilyTree\CourtHouse.cs" />
+    <Compile Include="3DFamilyTree\Family.cs" />
+    <Compile Include="3DFamilyTree\FamilyEvent.cs" />
+    <Compile Include="3DFamilyTree\Housholds.cs" />
+    <Compile Include="3DFamilyTree\Matchmaker.cs" />
+    <Compile Include="3DFamilyTree\MyPeople.cs" />
+    <Compile Include="3DFamilyTree\Myscript.cs" />
+    <Compile Include="3DFamilyTree\TreePerson.cs" />
     <Compile Include="AboutBox1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +138,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulationFormWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SimulationFormWizard.Designer.cs">
+      <DependentUpon>SimulationFormWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaticRandom.cs" />
     <Compile Include="WaitCursor.cs" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
@@ -151,6 +166,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SimulationFormWizard.resx">
+      <DependentUpon>SimulationFormWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="FamilySearch.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

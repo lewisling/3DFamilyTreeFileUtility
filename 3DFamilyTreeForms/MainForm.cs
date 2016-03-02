@@ -368,8 +368,8 @@ namespace _3DFamilyTreeFileUtility
                     _matchMaker.addToSinglesList(personAIndex, Adam.Sex);
                     _matchMaker.addToSinglesList(personEIndex, Eve.Sex);
 
-                    Debug.WriteLine("Hello " + Adam.Name + " and " + Eve.Name + " !");
-                    Debug.WriteLine(Adam.GetSex() + " and " + Eve.GetSex());
+                    //Debug.WriteLine("Hello " + Adam.Name + " and " + Eve.Name + " !");
+                    //Debug.WriteLine(Adam.GetSex() + " and " + Eve.GetSex());
 
                     for (currentYear = simulationForm.StartYear;
                         currentYear <= endYear;

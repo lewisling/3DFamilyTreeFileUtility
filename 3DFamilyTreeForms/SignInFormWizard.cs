@@ -11,8 +11,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FamilySearch.Api;
 using FamilySearch.Api.Ft;
+using Gedcomx.Support;
+using Gx.Links;
 using Gx.Rs.Api;
+using Gx.Rs.Api.Util;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RestSharp;
+using _3DFamilyTreeFileUtility.Properties;
 
 namespace _3DFamilyTreeFileUtility
 {
@@ -38,9 +44,11 @@ namespace _3DFamilyTreeFileUtility
             txtPassword.Text = _password;
         }
 
-
         private void btnSignIn_Click(object sender, EventArgs e)
         {
+            String access_token = null;
+            FamilySearchFamilyTree ident;
+
             if ((txtUsername.Text == "") || (txtPassword.Text == ""))
             {
                 txtStatus.Text = "A username and password are required.";
@@ -54,57 +62,91 @@ namespace _3DFamilyTreeFileUtility
                 btnSignIn.Enabled = false;
                 try
                 {
-                    //and authenticate to the collection
-                    _ft.AuthenticateViaOAuth2Password(txtUsername.Text, txtPassword.Text, _developerKey);
+                    #region Do it myself
+                    // CRAZY LITTLE HACK - I would hope the API would do this correctly
+                    // The ident.familysearch.org endpoint was not getting hit when I used the API
+                    //_ft.AuthenticateViaOAuth2Password(txtUsername.Text, txtPassword.Text, _developerKey);
 
-                    if (_ft.Response.StatusCode != HttpStatusCode.OK)
-                        txtStatus.Text =
-                            String.Format(
-                                "Unexpected HTTP status returned from Family Search Authentication Request.  Got {0}, description {1}",
-                                _ft.Response.StatusCode, _ft.Response.StatusDescription);
+                    ident = new FamilySearchFamilyTree(new Uri("https://ident.familysearch.org/"));
+                    //get our access token
+                    IDictionary<String, String> formData = new Dictionary<String, String>();
+                    formData.Add("grant_type", "password");
+                    formData.Add("username", txtUsername.Text);
+                    formData.Add("password", txtPassword.Text);
+                    formData.Add("client_id", _developerKey);
+
+                    IRestRequest request = new RestRequest()
+                        .Accept(MediaTypes.APPLICATION_JSON_TYPE)
+                        .ContentType(MediaTypes.APPLICATION_FORM_URLENCODED_TYPE)
+                        .SetEntity(formData)
+                        .Build("https://ident.familysearch.org/cis-web/oauth2/v3/token", Method.POST);
+
+                    IRestResponse response = ident.Client.Handle(request);
+                    var i = (int)response.StatusCode;
+
+                    if (i >= 200 && i < 300)
+                    {
+                        var accessToken = JsonConvert.DeserializeObject<IDictionary<string, object>>(response.Content);
+                        
+
+                        if (accessToken.ContainsKey("access_token"))
+                        {
+                            access_token = accessToken["access_token"] as string;
+                        }
+                        if (access_token == null && accessToken.ContainsKey("token"))
+                        {
+                            //workaround to accommodate providers that were built on an older version of the oauth2 specification.
+                            access_token = accessToken["token"] as string;
+                        }
+
+                        if (access_token == null)
+                        {
+                            throw new GedcomxApplicationException("Illegal access token response: no access_token provided.", response);
+                        }
+
+                    }
+                    #endregion
+
                 }
                 catch (GedcomxApplicationException Ex)
                 {
-                    var objects = JObject.Parse(Ex.Response.Content);
-                    txtStatus.Text = objects.SelectToken("error_description").Value<string>();
+                    try
+                    {  // if it is formatted with a Response, this will work
+                        var objects = JObject.Parse(Ex.Response.Content);
+                        txtStatus.Text = objects.SelectToken("error_description").Value<string>();
+                    }
+                    catch (Exception higherEx)
+                    {   // Otherwise the above Parse will throw an exception, in this case, just read the Exception Message
+                        txtStatus.Text = Ex.Message;
+                    }
                     btnSignIn.Enabled = true;
                     return;
                 }
 
+                txtResults.Text = "Starting ID not verified yet.";
+                txtStartingID.Focus();
 
-                if (!_ft.IsAuthenticated)
-                {
-                    txtStatus.Text = "The username or password was incorrect.";
-                    btnSignIn.Enabled = true;
+                // Magic Handoff
+                _ft.AuthenticateWithAccessToken(access_token);
 
-                    return;
-                }
-                else
-                {
-                    //DialogResult = DialogResult.OK;
-                    // Just move on to next tab in the Wizard
-                    // btnPage2Next.Enabled = false;  // styart off disabled until Starting ID is verified
-                    txtResults.Text = "Starting ID not verified yet.";
-                    txtStartingID.Focus();
+                txtCollection.Text = _ft.Collection.Title;
+                txtClient.Text = _ft.Client.BaseUrl;
+                UserState userState = _ft.ReadCurrentUser();
+                txtLoggedInAs.Text = userState.User.DisplayName;
+                txtMyID.Text = userState.User.PersonId;
 
-                    txtCollection.Text = _ft.Collection.Title;
-                    txtClient.Text = _ft.Client.BaseUrl;
-                    UserState userState = _ft.ReadCurrentUser();
-                    txtLoggedInAs.Text = userState.User.DisplayName;
-                    txtMyID.Text = userState.User.PersonId;
+                txtStartingID.Text = _fhs.startingID;
+                rbtnAncestors.Checked = _fhs.isAncestry;
+                rbtnDecendants.Checked = _fhs.isDescendancy;
+                rbtnBoth.Checked = _fhs.isBoth;
+                numGenerations.Value = _fhs.numberOfGenerations;
 
-                    txtStartingID.Text = _fhs.startingID;
-                    rbtnAncestors.Checked = _fhs.isAncestry;
-                    rbtnDecendants.Checked = _fhs.isDescendancy;
-                    rbtnBoth.Checked = _fhs.isBoth;
-                    numGenerations.Value = _fhs.numberOfGenerations;
+                btnSignIn.Enabled = true;
 
-                    btnSignIn.Enabled = true;
-
-                    tabWizard.SelectedIndex = (tabWizard.SelectedIndex + 1 < tabWizard.TabCount)
-                        ? tabWizard.SelectedIndex + 1
-                        : tabWizard.SelectedIndex;
-                }
+                tabWizard.SelectedIndex = (tabWizard.SelectedIndex + 1 < tabWizard.TabCount)
+                    ? tabWizard.SelectedIndex + 1
+                    : tabWizard.SelectedIndex;
+                
             }
         }
         private void btnDone_Click(object sender, EventArgs e)

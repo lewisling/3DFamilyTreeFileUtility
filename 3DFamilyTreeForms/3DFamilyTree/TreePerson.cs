@@ -142,8 +142,8 @@ namespace _3DFamilyTreeFileUtility
 
             int iRand = StaticRandom.RandomNumber(0, 10);
             if (iRand > 2) retAnswer = true;
-            Debug.WriteLine(Name + " Got asked to Marry. iRand =" + iRand.ToString());
-            Debug.WriteLine("She said " + (retAnswer ? "Yes" : "No") + "!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //Debug.WriteLine(Name + " Got asked to Marry. iRand =" + iRand.ToString());
+            //Debug.WriteLine("She said " + (retAnswer ? "Yes" : "No") + "!!!!!!!!!!!!!!!!!!!!!!!!!");
             return retAnswer;
         }
 
@@ -154,7 +154,7 @@ namespace _3DFamilyTreeFileUtility
             if (iRand < mortalityRate)
             {
                 retAnswer = true;
-                Debug.WriteLine(Name + " Just Died at age " + ageText(currentYear) + ", I am sorry. mortalityRate=" + mortalityRate + ", iRand =" + iRand.ToString());
+                //Debug.WriteLine(Name + " Just Died at age " + ageText(currentYear) + ", I am sorry. mortalityRate=" + mortalityRate + ", iRand =" + iRand.ToString());
             }
             return retAnswer;
         }
@@ -164,20 +164,26 @@ namespace _3DFamilyTreeFileUtility
             string retSex = "NotSet";
             if (Sex == PersonSex.Male) retSex = "Male";
             if (Sex == PersonSex.Female) retSex = "Female";
+            if (Sex == PersonSex.NotSet) retSex = "Not Set";
+
+
             return retSex;
+
         }
    
         public PersonSex GetSexEnum(string sexString)
         {
             var retSexEnum = PersonSex.NotSet;
-
-            if (sexString.ToLower().Contains("fe"))
+            if (sexString != null)
             {
-                retSexEnum = PersonSex.Female;
-            }
-            else if (sexString.ToLower().Contains("male"))
-            {
-                retSexEnum = PersonSex.Male;
+                if (sexString.ToLower().Contains("fe"))
+                {
+                    retSexEnum = PersonSex.Female;
+                }
+                else if (sexString.ToLower().Contains("male"))
+                {
+                    retSexEnum = PersonSex.Male;
+                }
             }
             return retSexEnum;
         }

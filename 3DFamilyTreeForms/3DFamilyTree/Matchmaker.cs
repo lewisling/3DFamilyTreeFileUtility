@@ -184,9 +184,9 @@ namespace _3DFamilyTreeFileUtility
             if (iRand < _chanceForABaby)
             {
                 retGotaBaby = true;
-                Debug.WriteLine(courtHouse.myPeople.allPeople[myFamily.BridePersonIndex].Name + " & " +
-                                courtHouse.myPeople.allPeople[myFamily.GroomPersonIndex].Name +
-                                " Are going to have a baby! iRand =" + iRand.ToString());
+                //Debug.WriteLine(courtHouse.myPeople.allPeople[myFamily.BridePersonIndex].Name + " & " +
+                //                courtHouse.myPeople.allPeople[myFamily.GroomPersonIndex].Name +
+                //                " Are going to have a baby! iRand =" + iRand.ToString());
             }
 
             return retGotaBaby;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnityTreeScripts
+namespace _3DFamilyTreeFileUtility
 {
     public class MyPeople
     {
@@ -23,21 +23,6 @@ namespace UnityTreeScripts
 
         }
 
-        public class mortalityBracket
-        {
-            public int upToAge;
-            // rates per 100000
-            public int maleDeathRate;
-            public int femaleDeathRate;
-
-            public mortalityBracket(int UpToAge, int MaleDeathRate, int FemaleDeathRate)
-            {
-                upToAge = UpToAge;
-                maleDeathRate = MaleDeathRate;
-                femaleDeathRate = FemaleDeathRate;
-            }
-        }
-
         public int livingCount()
         {
             int retCount = 0;
@@ -53,8 +38,6 @@ namespace UnityTreeScripts
             allPeople.Add(person);
             return allPeople.IndexOf(person);
         }
-
-
     }
 
 

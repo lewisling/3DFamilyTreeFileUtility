@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnityTreeScripts
+namespace _3DFamilyTreeFileUtility
 {
     public class Family
     {
@@ -9,11 +9,6 @@ namespace UnityTreeScripts
         public int GroomPersonIndex;
         public string MarriageDate = "";
         public List<int> ChildrenPersonIndexList;
-
-        private static int _childBearingAge = 49;
-        private static int _babySpacingYears = 2;
-        private static int _firstChildAfterMarriage = 1;
-        private static int _chanceForABaby = 30; //percent
 
         /// <summary>
         /// TODO
@@ -44,47 +39,7 @@ namespace UnityTreeScripts
 
 
 
-#if NOTNOW
-        public bool BabyTime(int currentYear)
-        {
-            //Debug.Log ("Are we having a baby?");
-            bool retGotaBaby = false;
-            var myscript = GameObject.Find("Myscript").GetComponent<Myscript>();
-            // consider Marriage date
-            int iMarriageDate;
-            if (!int.TryParse(MarriageDate, out iMarriageDate)) return retGotaBaby;
-            if ((currentYear - iMarriageDate) <= _firstChildAfterMarriage) return retGotaBaby;
-            //Debug.Log ("Marriage Date looks good");
-            // consider we need both a Bride and Groom
-            if (myscript.myPeople.allPeople[GroomPersonIndex].isDead()) return retGotaBaby;
-            if (myscript.myPeople.allPeople[BridePersonIndex].isDead()) return retGotaBaby;
-            //Debug.Log ("We have a Bride and Groom!");
-            // consider age of Bride
 
-            if (myscript.myPeople.allPeople[BridePersonIndex].age(currentYear) >= _childBearingAge) return retGotaBaby;
-            //Debug.Log ("The Bride is not too old.");
-            // consider yougest childs birth year/age
-            int iYoungestChildBirth = 0;
-            if (ChildrenPersonIndexList.Count != 0)
-            {
-                foreach (int ChildPersonIndex in ChildrenPersonIndexList)
-                {
-                    int iChildBirth;
-                    if (!int.TryParse(myscript.myPeople.allPeople[ChildPersonIndex].Birth, out iChildBirth))
-                        return retGotaBaby;
-                    if (iChildBirth > iYoungestChildBirth) iYoungestChildBirth = iChildBirth;
-                }
-                if ((currentYear - iYoungestChildBirth) < _babySpacingYears) return retGotaBaby;
-            }
-            //Debug.Log ("There has been enough time since the last child!");
-            // Okay all is well - lets also throw in a random chance
-            int iRand = Random.Range(0, 100);
-            if (iRand < _chanceForABaby) retGotaBaby = true;
-            //Debug.Log (Bride.Name + " & " + Groom.Name + " Are going to have a baby! iRand =" + iRand.ToString());
-
-            return retGotaBaby;
-        }
-#endif
 
         public void AddChildIndex(int childPersonIndex)
         {

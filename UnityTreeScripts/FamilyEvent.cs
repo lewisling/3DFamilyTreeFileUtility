@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnityTreeScripts
+namespace _3DFamilyTreeFileUtility
 {
     public class FamilyEvent
     {

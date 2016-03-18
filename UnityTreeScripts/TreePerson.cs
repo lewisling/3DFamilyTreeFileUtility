@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Gx.Conclusion;
 
-namespace UnityTreeScripts
+namespace _3DFamilyTreeFileUtility
 {
     public class TreePerson
     {
-        private Random rnd = new Random();
+        private Random rnd;  // WIll get set below
         private readonly Person _familSearchPerson = null;
         private readonly string _familySearchID = "";
         public string Name = "";
@@ -69,7 +70,9 @@ namespace UnityTreeScripts
                     break;
 
                 case PersonType.Unique:
-                    if (rnd.Next(0, 2) == 0)
+                    var perRandom = rnd.Next(0, 100);
+                    Debug.WriteLine("Random " + perRandom);
+                    if (perRandom > 49)
                     {
                         Sex = PersonSex.Male;
                         Name = MaleNames[rnd.Next(0, MaleNames.Length)];
@@ -122,6 +125,11 @@ namespace UnityTreeScripts
             BirthFamilyIndex = index;
         }
 
+        public void setRandomSeed(Random seed)
+        {
+            rnd = seed;
+        }
+
         public void AddEvent(FamilyEvent newEvent)
         {
 
@@ -138,7 +146,7 @@ namespace UnityTreeScripts
         {
             bool retAnswer = false;
 
-            int iRand = rnd.Next(0, 10);
+            int iRand = rnd.Next(1, 10);
             if (iRand > 3) retAnswer = true;
             //Debug.Log (Name + " Got asked to Marry. iRand =" + iRand.ToString());
             //Debug.Log ("She said " + (retAnswer ? "Yes" : "No") + "!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -148,7 +156,7 @@ namespace UnityTreeScripts
         public bool isDeathEvent(int mortalityRate, int currentYear) // Chance out of 100000
         {
             bool retAnswer = false;
-            int iRand = rnd.Next(0, 100000);
+            int iRand = rnd.Next(1, 100000);
             if (iRand < mortalityRate)
             {
                 retAnswer = true;

@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FamilySearch.Api;
 using FamilySearch.Api.Ft;
+using FamilySearch.Api.Memories;
 using Gedcomx.Support;
+using Gx.Conclusion;
 using Gx.Links;
 using Gx.Rs.Api;
 using Gx.Rs.Api.Util;
@@ -29,6 +31,7 @@ namespace _3DFamilyTreeFileUtility
         private string _developerKey = "";
         private FamilySearchFamilyTree _ft;
         private FamilyHistorySource _fhs;
+        private FamilySearchMemories _memories;
 
         public SignInFormWizard(FamilyHistorySource fhs, FamilySearchFamilyTree ft, string username, string password,
             string developerKey)
@@ -42,12 +45,15 @@ namespace _3DFamilyTreeFileUtility
             lblSandbox.Visible = _fhs.isSandBox;
             txtUsername.Text = _username;
             txtPassword.Text = _password;
+            this.ActiveControl = txtUsername;
+            txtUsername.Focus();
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
         {
             String access_token = null;
             FamilySearchFamilyTree ident;
+
 
             if ((txtUsername.Text == "") || (txtPassword.Text == ""))
             {
@@ -105,6 +111,11 @@ namespace _3DFamilyTreeFileUtility
                         }
 
                     }
+                    else
+                    {
+                        throw new GedcomxApplicationException("Unable to authenticate", response);
+
+                    }
                     #endregion
 
                 }
@@ -143,12 +154,154 @@ namespace _3DFamilyTreeFileUtility
 
                 btnSignIn.Enabled = true;
 
+
+                //         _memories = new FamilySearchMemories();
+                //       _memories = (FamilySearchMemories)_memories.AuthenticateWithAccessToken(access_token).Get();
+                //     var state = _memories.ReadResourcesOfCurrentUser();
+
+
+
+                HELPER_updateTextBox(txtStatus, "Collecting direct ancestors...");
+
+
+                fillAncestorTreePicker(_ft, treAncestorPicker.Nodes);
+
+
                 tabWizard.SelectedIndex = (tabWizard.SelectedIndex + 1 < tabWizard.TabCount)
                     ? tabWizard.SelectedIndex + 1
                     : tabWizard.SelectedIndex;
-                
             }
         }
+
+
+        private void fillAncestorTreePicker(FamilySearchFamilyTree myFT, TreeNodeCollection myTreeNodeCollection)
+        {
+            PersonParentsState parentsState;
+            List<TreeNode> myParentsTreeNodes;
+            TreeNode node;
+
+            UserState userState = myFT.ReadCurrentUser();
+            var startingID = userState.User.PersonId;
+            var personState = (PersonState)myFT.ReadPersonById(startingID);
+
+            HELPER_updateTextBox(txtStatus, "Collecting direct ancestors... " + personState.Person.DisplayExtension.Name);
+
+            parentsState = personState.ReadParents();
+            myParentsTreeNodes = new List<TreeNode>();
+            foreach (var parentPerson in parentsState.Persons)
+            {
+                HELPER_updateTextBox(txtStatus, "Collecting direct ancestors... " + parentPerson.DisplayExtension.Name);
+                TreeNode aNode = ancestryToTreeNode((PersonState)myFT.ReadPersonById(parentPerson.Id));
+                myParentsTreeNodes.Add(aNode);
+            }
+            
+            node = new TreeNode(personState.Person.DisplayExtension.Name + ": " + startingID, myParentsTreeNodes.ToArray());
+
+            myTreeNodeCollection.Add(node);
+
+            // Repeat for my Spouce(s)
+
+            PersonSpousesState spousesState = personState.ReadSpouses();
+
+            foreach (var spousePerson in spousesState.Persons)
+            {
+                var spouseId = spousePerson.Id;
+                var spouseState = (PersonState)myFT.ReadPersonById(spouseId);
+
+                HELPER_updateTextBox(txtStatus, "Collecting direct ancestors... " + spouseState.Person.DisplayExtension.Name);
+
+                parentsState = spouseState.ReadParents();
+                myParentsTreeNodes = new List<TreeNode>();
+                foreach (var parentPerson in parentsState.Persons)
+                {
+                    HELPER_updateTextBox(txtStatus, "Collecting direct ancestors... " + parentPerson.DisplayExtension.Name);
+                    TreeNode aNode = ancestryToTreeNode((PersonState)myFT.ReadPersonById(parentPerson.Id));
+                    myParentsTreeNodes.Add(aNode);
+                }
+
+                node = new TreeNode(spousePerson.DisplayExtension.Name + ": " + spouseId, myParentsTreeNodes.ToArray());
+
+                myTreeNodeCollection.Add(node);
+            }
+
+        }
+
+        private TreeNode ancestryToTreeNode(PersonState startPersonState)
+        {
+            TreeNode node;
+            var ancestryState = startPersonState.ReadAncestry();
+            TreeNode[] myParentsTreeNodes = RecAddPersonsParents(ancestryState.Tree.Root);
+            if (myParentsTreeNodes != null)
+            {
+                node =
+                    new TreeNode(startPersonState.Person.DisplayExtension.Name + ": " + startPersonState.Person.Id,
+                        myParentsTreeNodes);
+            }
+            else
+            {
+                node =
+                   new TreeNode(startPersonState.Person.DisplayExtension.Name + ": " + startPersonState.Person.Id);
+            }
+
+            return node;
+
+        }
+        private TreeNode[] RecAddPersonsParents(AncestryTree.AncestryNode ancestryNode)
+        {
+            TreeNode fatherNode = null;
+            TreeNode motherNode = null;
+
+            if (ancestryNode.Person == null) return null;
+            if (ancestryNode.Father == null && ancestryNode.Mother == null)  //end of the line Clancy!
+                return null;
+
+            if (ancestryNode.Father != null && ancestryNode.Father.Person != null)
+            {
+                TreeNode[] fatherNodes = RecAddPersonsParents(ancestryNode.Father);
+                if (fatherNodes != null && fatherNodes[0] != null)
+                {
+                    fatherNode =
+                        new TreeNode(
+                            ancestryNode.Father.Person.DisplayExtension.Name + ": " +
+                            ancestryNode.Father.Person.Id, fatherNodes);
+                }
+                else
+                {
+                    fatherNode =
+                        new TreeNode(ancestryNode.Father.Person.DisplayExtension.Name + ": " +
+                                     ancestryNode.Father.Person.Id);
+                }
+            }
+
+            if (ancestryNode.Mother != null && ancestryNode.Mother.Person != null)
+            {
+                TreeNode[] motherNodes = RecAddPersonsParents(ancestryNode.Mother);
+                if (motherNodes != null && motherNodes[0] != null)
+                {
+                    motherNode =
+                        new TreeNode(
+                            ancestryNode.Mother.Person.DisplayExtension.Name + ": " +
+                            ancestryNode.Mother.Person.Id, motherNodes);
+                }
+                else
+                {
+                    motherNode =
+                        new TreeNode(ancestryNode.Mother.Person.DisplayExtension.Name + ": " +
+                                     ancestryNode.Mother.Person.Id);
+                }
+            }
+
+            if (fatherNode == null)
+                return new TreeNode[] {motherNode};
+
+            if (motherNode == null)
+                return new TreeNode[] {fatherNode};
+
+            return new TreeNode[] { fatherNode, motherNode };
+            
+        }
+
+
         private void btnDone_Click(object sender, EventArgs e)
         {
 
@@ -210,7 +363,7 @@ namespace _3DFamilyTreeFileUtility
             VerifyID();
         }
 
-        #region HELPERS
+#region HELPERS
         /// <summary>
         /// Will update Text in a Text Box when the UI thread is still busy
         /// </summary>
@@ -225,7 +378,7 @@ namespace _3DFamilyTreeFileUtility
             Application.DoEvents();
         }
 
-        #endregion
+#endregion
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -240,5 +393,13 @@ namespace _3DFamilyTreeFileUtility
             btnVerify.Enabled = true;
         }
 
+        private void treAncestorPicker_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            // Get the ID after the : and after the space
+            string fsId = e.Node.Text.Split(':')[1].Split(' ')[1];
+            txtStartingID.Text = fsId;
+            //MessageBox.Show(string.Format("You SELECTED {0}.", fsId));
+
+        }
     }
 }

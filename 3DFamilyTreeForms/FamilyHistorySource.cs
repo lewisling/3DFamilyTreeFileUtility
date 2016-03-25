@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Security.Authentication;
@@ -47,8 +48,8 @@ namespace _3DFamilyTreeFileUtility
         private CourtHouse _courtHouse;
         private BackgroundWorker _worker;
         // The next two variables will be read from the FamilySearch.config file if _developerKey is set to "READ FROM CONFIG FILE"
-        private string _appKey = "READ FROM CONFIG FILE"; 
-        private bool _isSandBox = true;
+        private string _appKey = "READ FROM CONFIG FILE";   // otherwise set to "READ FROM CONFIG FILE"; 
+        private bool _isSandBox = false;
 
         public FamilyHistorySource(SourceType sourceType)
         {
@@ -147,6 +148,7 @@ namespace _3DFamilyTreeFileUtility
             throw new NotImplementedException("This connection type NOT IMPLEMENTED YET");
         }
 
+
         public bool readCollection(CourtHouse courtHouse, BackgroundWorker worker)
         {
 
@@ -210,6 +212,8 @@ namespace _3DFamilyTreeFileUtility
         {
             //Person must already be added to CourtHouse
 
+            HELPER_Add_portrait((FamilyTreePersonState)personState, treePersonIndex);
+
             DescendancyResultsState descendacyState = personState.ReadDescendancy(
                 FamilySearchOptions.IncludePersonDetails(),
                 FamilySearchOptions.IncludeMarriageDetails(),
@@ -221,19 +225,33 @@ namespace _3DFamilyTreeFileUtility
 
             //DescendancyResultsState
             DescendancyTree.DescendancyNode myNode = descendacyState.Tree.Root;
+            int treePersonSpouceIndex;
+            int familyIndex;
 
-            TreePerson treePersonSpouce = new TreePerson(TreePerson.PersonType.Null);
+            TreePerson treePersonSpouce;
 
             if (myNode.Spouse != null)
             {
                 treePersonSpouce = new TreePerson(TreePerson.PersonType.FamilySearch, myNode.Spouse.Id,
                     myNode.Spouse);
-            }
-            
-            var treePersonSpouceIndex = _courtHouse.myPeople.addToAllPeople(treePersonSpouce);
 
-            var familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
-                myNode.Person.DisplayExtension.MarriageDate);
+                treePersonSpouceIndex = _courtHouse.myPeople.addToAllPeople(treePersonSpouce);
+
+                familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
+                    myNode.Person.DisplayExtension.MarriageDate);
+
+                HELPER_Add_portrait(ft.ReadPersonById(myNode.Spouse.Id), treePersonSpouceIndex);
+                
+            }
+            else
+            {
+                treePersonSpouce = new TreePerson(TreePerson.PersonType.Null);
+                treePersonSpouceIndex = _courtHouse.myPeople.addToAllPeople(treePersonSpouce);
+                familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
+                    myNode.Person.DisplayExtension.MarriageDate);
+
+            }
+
 
             var nextGenerationValue = generation - 1;
 
@@ -278,6 +296,29 @@ namespace _3DFamilyTreeFileUtility
             Xml,
             Json,
             Tdft
+        }
+
+        public bool HELPER_Add_portrait(FamilyTreePersonState personState, int treePersonIndex)
+        {
+
+            var response = personState.ReadPortrait();
+
+            if (!response.HasClientError() && !response.HasServerError())
+            {
+                // NOTE: The READ_PERSON_ID user does not have images, but a default is specified, thus the response should be 307.
+                if (response.StatusCode == HttpStatusCode.TemporaryRedirect)
+                {
+                    var any = response.Headers.Get("Location").Any();
+                    var single = response.Headers.Get("Location").Single().Value;
+                    var location = response.Headers.Get("Location").Single().Value.ToString();
+                    _courtHouse.myPeople.allPeople[treePersonIndex].PortraitURI = location;
+                    //   var wc = new WebClient();
+                    //   Image x = Image.FromStream(wc.OpenRead(location));
+                    return true;
+                }
+
+            }
+            return false;
         }
     }
 }

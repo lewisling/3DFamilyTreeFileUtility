@@ -52,7 +52,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnSimulation = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPlayFile = new System.Windows.Forms.TextBox();
+            this.btnPlay3DFT = new System.Windows.Forms.Button();
+            this.picLoading = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // txtOutput
@@ -61,12 +67,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOutput.Location = new System.Drawing.Point(18, 103);
+            this.txtOutput.Location = new System.Drawing.Point(18, 116);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(718, 186);
+            this.txtOutput.Size = new System.Drawing.Size(713, 216);
             this.txtOutput.TabIndex = 0;
             this.txtOutput.TabStop = false;
             // 
@@ -74,7 +80,7 @@
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(349, 58);
+            this.btnStart.Location = new System.Drawing.Point(323, 67);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 30);
             this.btnStart.TabIndex = 1;
@@ -93,7 +99,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(636, 320);
+            this.btnCancel.Location = new System.Drawing.Point(625, 402);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 2;
@@ -108,7 +114,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(750, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(745, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.TabStop = true;
             this.menuStrip1.Text = "menuStrip1";
@@ -183,7 +189,7 @@
             // 
             this.btnShowLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnShowLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowLog.Location = new System.Drawing.Point(27, 320);
+            this.btnShowLog.Location = new System.Drawing.Point(12, 403);
             this.btnShowLog.Name = "btnShowLog";
             this.btnShowLog.Size = new System.Drawing.Size(100, 30);
             this.btnShowLog.TabIndex = 3;
@@ -193,9 +199,9 @@
             // 
             // btnSaveAs
             // 
-            this.btnSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveAs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveAs.Location = new System.Drawing.Point(174, 320);
+            this.btnSaveAs.Location = new System.Drawing.Point(625, 67);
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Size = new System.Drawing.Size(100, 30);
             this.btnSaveAs.TabIndex = 4;
@@ -210,9 +216,9 @@
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOpenFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenFile.Location = new System.Drawing.Point(636, 58);
+            this.btnOpenFile.Location = new System.Drawing.Point(323, 404);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(100, 30);
             this.btnOpenFile.TabIndex = 5;
@@ -225,7 +231,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(348, 28);
+            this.label1.Location = new System.Drawing.Point(29, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(247, 16);
             this.label1.TabIndex = 6;
@@ -249,7 +255,7 @@
             // 
             this.btnSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSimulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSimulation.Location = new System.Drawing.Point(495, 58);
+            this.btnSimulation.Location = new System.Drawing.Point(479, 67);
             this.btnSimulation.Name = "btnSimulation";
             this.btnSimulation.Size = new System.Drawing.Size(100, 30);
             this.btnSimulation.TabIndex = 8;
@@ -257,11 +263,55 @@
             this.btnSimulation.UseVisualStyleBackColor = true;
             this.btnSimulation.Click += new System.EventHandler(this.btnSimulation_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.txtPlayFile);
+            this.groupBox1.Location = new System.Drawing.Point(23, 338);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(708, 49);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Play file:";
+            // 
+            // txtPlayFile
+            // 
+            this.txtPlayFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPlayFile.Location = new System.Drawing.Point(9, 19);
+            this.txtPlayFile.Name = "txtPlayFile";
+            this.txtPlayFile.ReadOnly = true;
+            this.txtPlayFile.Size = new System.Drawing.Size(693, 20);
+            this.txtPlayFile.TabIndex = 1;
+            // 
+            // btnPlay3DFT
+            // 
+            this.btnPlay3DFT.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPlay3DFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlay3DFT.Location = new System.Drawing.Point(479, 403);
+            this.btnPlay3DFT.Name = "btnPlay3DFT";
+            this.btnPlay3DFT.Size = new System.Drawing.Size(100, 30);
+            this.btnPlay3DFT.TabIndex = 10;
+            this.btnPlay3DFT.Text = "Play 3DFT !";
+            this.btnPlay3DFT.UseVisualStyleBackColor = true;
+            this.btnPlay3DFT.Click += new System.EventHandler(this.btnPlay3DFT_Click);
+            // 
+            // picLoading
+            // 
+            this.picLoading.Image = global::_3DFamilyTreeFileUtility.Properties.Resources.loading;
+            this.picLoading.Location = new System.Drawing.Point(135, 174);
+            this.picLoading.Name = "picLoading";
+            this.picLoading.Size = new System.Drawing.Size(141, 103);
+            this.picLoading.TabIndex = 11;
+            this.picLoading.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 362);
+            this.ClientSize = new System.Drawing.Size(745, 448);
+            this.Controls.Add(this.picLoading);
+            this.Controls.Add(this.btnPlay3DFT);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSimulation);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -277,6 +327,9 @@
             this.Text = "3D Family Tree - File Utility";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +360,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnSimulation;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtPlayFile;
+        private System.Windows.Forms.Button btnPlay3DFT;
+        private System.Windows.Forms.PictureBox picLoading;
     }
 }
 

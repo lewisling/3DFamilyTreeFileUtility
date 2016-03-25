@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityTreeScripts;
+using _3DFamilyTreeFileUtility._3DFamilyTree;
 
 //TODO Get This information from the Actual FamilySearch sight - not just the SandBox
 
@@ -21,23 +23,37 @@ namespace _3DFamilyTreeFileUtility
         //private Family History Source - can refer to several types of Family Histroy Sources
         private FamilyHistorySource _fhs = null;
 
-        // Default name - this wo;; change based on where the data comes from
-        private string fileNameForSaving = "3DTree_families";
+        private AppDataStorage _myAppDataStorage;
+
 
 
         public MainForm()
         {
             InitializeComponent();
+            picLoading.Hide();
+
 
             _fhs = new FamilyHistorySource(FamilyHistorySource.SourceType.FamilySearchService);
 
-            fileNameForSaving = "3DTree_families";
             HELPER_EnableOutputUI(false);
             HELPER_EnableStartUI(true);
             txtOutput.Text = "Welcome to the '3D Family Tree File Utility'." + System.Environment.NewLine +
                              "This utility will help you create the Family History data file needed for 3D Family Tree.";
             btnStart.Focus();
 
+            _myAppDataStorage = AppDataStorage.Read();
+
+            if (string.IsNullOrEmpty(_myAppDataStorage.FamilyInfoFileName))
+            {
+                _myAppDataStorage.FamilyInfoFileName = Path.GetFullPath("..\\3DFT\\MyFamilyInfo.xml");
+                // first time in, so wait until we have a FILE SAVE (or opened) before letting them play it
+                this.btnPlay3DFT.Enabled = false;
+                txtOutput.AppendText(System.Environment.NewLine + System.Environment.NewLine + "--> Create or open a file, so that you can play it.");
+
+            }
+
+            txtPlayFile.Text = _myAppDataStorage.FamilyInfoFileName;
+            _myAppDataStorage.Save();
         }
 
         #region Family Search 
@@ -46,6 +62,8 @@ namespace _3DFamilyTreeFileUtility
         {
             txtOutput.Text = "Let's get started!";
             HELPER_EnableStartUI(false);
+            this.btnPlay3DFT.Enabled = false;  // only enabled after saving the file. Or canceling
+            this.btnOpenFile.Enabled = false;
             StartFamilySearchConnection();
         }
 
@@ -65,8 +83,9 @@ namespace _3DFamilyTreeFileUtility
             if (_fhs.initializeConnection())
             {
 
-                txtOutput.Text = "Collecting Results, please wait...";
+                txtOutput.Text = "Collecting Results. This may take several minutes.  Please wait...";
                 _courtHouse.init();
+                picLoading.Show();
                 backgroundWorker1.RunWorkerAsync();
 
 
@@ -76,6 +95,9 @@ namespace _3DFamilyTreeFileUtility
                 txtOutput.Text = "Canceled Sign in.";
 
                 HELPER_EnableStartUI(true);
+                this.btnPlay3DFT.Enabled = true;
+                this.btnOpenFile.Enabled = true;
+
             }
 
         }
@@ -99,8 +121,12 @@ namespace _3DFamilyTreeFileUtility
             _courtHouse = new CourtHouse();
             txtOutput.Text = "Lets go get that file, shall we?";
 
-            openFileDialog1.Filter = "Xml Doc (*.xml)|*.xml|Text (*.txt)|*.txt";
+            openFileDialog1.FileName = Path.GetFileName(_myAppDataStorage.FamilyInfoFileName);
+            openFileDialog1.Filter = "Xml Doc (*.xml)|*.xml";
             openFileDialog1.AddExtension = true;
+            openFileDialog1.InitialDirectory = Path.GetDirectoryName(_myAppDataStorage.FamilyInfoFileName) +
+                                               Path.DirectorySeparatorChar;
+            openFileDialog1.RestoreDirectory = true;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -117,7 +143,13 @@ namespace _3DFamilyTreeFileUtility
                 txtOutput.AppendText(string.Format("Read in {0} Families, and {1} Individuals",
                     _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
 
-                fileNameForSaving = openFileDialog1.FileName;
+                txtPlayFile.Text = _myAppDataStorage.FamilyInfoFileName = openFileDialog1.FileName;
+                _myAppDataStorage.Save();
+                this.btnPlay3DFT.Enabled = true;
+                this.btnOpenFile.Enabled = true;
+
+
+
                 HELPER_EnableOutputUI(true);
             }
             else
@@ -147,9 +179,12 @@ namespace _3DFamilyTreeFileUtility
         private void SaveAs()
         {
 
-            saveFileDialog1.FileName = fileNameForSaving;
-            saveFileDialog1.Filter = "Xml Doc (*.xml)|*.xml|Text (*.txt)|*.txt";
+            saveFileDialog1.FileName = Path.GetFileName(_myAppDataStorage.FamilyInfoFileName);
+            saveFileDialog1.Filter = "Xml Doc (*.xml)|*.xml";
             saveFileDialog1.AddExtension = true;
+            saveFileDialog1.InitialDirectory = Path.GetDirectoryName(_myAppDataStorage.FamilyInfoFileName) +
+                                               Path.DirectorySeparatorChar;
+            saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -177,6 +212,14 @@ namespace _3DFamilyTreeFileUtility
                 txtOutput.Clear();
                 txtOutput.AppendText(string.Format("Wrote to file {0} Families, and {1} Individuals",
                     _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
+                txtPlayFile.Text = _myAppDataStorage.FamilyInfoFileName = saveFileDialog1.FileName;
+                _myAppDataStorage.Save();
+                this.btnPlay3DFT.Enabled = true;
+                this.btnOpenFile.Enabled = true;
+
+
+
+
             }
             else
             {
@@ -265,7 +308,7 @@ namespace _3DFamilyTreeFileUtility
                 e.Cancel = true;
                 return;
             }
-
+            
             e.Result = "Processing Complete!" + System.Environment.NewLine +
                        "Click the 'Save As' button below to save this data in the '3D FamilyTree' File format.";
         }
@@ -284,6 +327,8 @@ namespace _3DFamilyTreeFileUtility
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            picLoading.Hide();
+
             if (e.Error != null)
             {
                 txtOutput.Clear();
@@ -303,10 +348,12 @@ namespace _3DFamilyTreeFileUtility
                     txtOutput.Clear();
                     txtOutput.AppendText(string.Format("We were able to read {0} Families, and {1} Individuals from FamilySearch.", _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
                     txtOutput.AppendText(System.Environment.NewLine + "Background worker result: " + (string) e.Result);
+                    txtOutput.AppendText(System.Environment.NewLine + System.Environment.NewLine + "--> Next, Save this file, so that you can play it.");
 
-                    fileNameForSaving = _fhs.username + " "
-                                       + _fhs.startingID + " "
-                                       + _fhs.numberOfGenerations + " generations";
+
+                    //fileNameForSaving = _fhs.username + " "
+                    //                   + _fhs.startingID + " "
+                    //                   + _fhs.numberOfGenerations + " generations";
                     HELPER_EnableOutputUI(true);
                 }
             }
@@ -322,7 +369,6 @@ namespace _3DFamilyTreeFileUtility
         private void HELPER_EnableStartUI(bool enable)
         {
             this.btnStart.Enabled = enable;
-            this.btnOpenFile.Enabled = enable;
             this.btnSimulation.Enabled = enable;
             this.startToolStripMenuItem.Enabled = enable;
             this.openToolStripMenuItem.Enabled = enable;
@@ -347,6 +393,9 @@ namespace _3DFamilyTreeFileUtility
             using (SimulationFormWizard simulationForm = new SimulationFormWizard())
             {
                 txtOutput.Text = "Lets go forth and replentish the Earth, shall we?";
+                this.btnPlay3DFT.Enabled = false;  // only enabled after saving the file.
+                this.btnOpenFile.Enabled = false;
+
 
                 var dialogRet = simulationForm.ShowDialog();
 
@@ -398,9 +447,10 @@ namespace _3DFamilyTreeFileUtility
                     txtOutput.Clear();
                     txtOutput.AppendText(string.Format("Our simulation created {0} Families, and {1} Individuals",
                         _courtHouse.allFamilies.Count, _courtHouse.myPeople.allPeople.Count));
+                    txtOutput.AppendText(System.Environment.NewLine + System.Environment.NewLine + "--> Next, Save this file, so that you can play it.");
 
-                    fileNameForSaving = string.Format("3DTree_Sim_F{0}_P{1}", _courtHouse.allFamilies.Count,
-                        _courtHouse.myPeople.allPeople.Count);
+                    //fileNameForSaving = string.Format("3DTree_Sim_F{0}_P{1}", _courtHouse.allFamilies.Count,
+                    //    _courtHouse.myPeople.allPeople.Count);
 
                     HELPER_EnableOutputUI(true);
 
@@ -409,9 +459,40 @@ namespace _3DFamilyTreeFileUtility
                 {
                     txtOutput.Clear();
                     txtOutput.AppendText("Simulation, Canceled.");
+                    this.btnPlay3DFT.Enabled = true;
+                    this.btnOpenFile.Enabled = true;
+
 
                 }
             }
         }
+
+        private void btnPlay3DFT_Click(object sender, EventArgs e)
+        {
+            string familySearchConfigFile = ConfigurationManager.AppSettings["FamilySearchConfigFile"];
+            var configFileReader = new CustomConfigurationFileReader(familySearchConfigFile);
+            var config = configFileReader.Config;
+
+            var GameAppFilename = config.AppSettings.Settings["3DFTApplication"].Value;
+            if (File.Exists(GameAppFilename))
+            {
+                if (File.Exists(_myAppDataStorage.FamilyInfoFileName))
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                    startInfo.FileName = GameAppFilename;
+                    startInfo.Arguments = "\"" + _myAppDataStorage.FamilyInfoFileName + "\"";  //wrap with quotes paths can contain spaces
+                    Process.Start(startInfo);
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("No 'Family Info' file found at {0}", _myAppDataStorage.FamilyInfoFileName));
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Format("No '3DFT Application' found at {0}.  Check your config file.", GameAppFilename));
+            }
+        }
+
     }
 }

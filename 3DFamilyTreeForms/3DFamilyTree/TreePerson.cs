@@ -14,6 +14,7 @@ namespace _3DFamilyTreeFileUtility
         public string Birth = "";
         public string Death = "";
         public string Lifespan = "";
+        public string PortraitURI = "";
         public List<FamilyEvent> myEvents;
         public int BirthFamilyIndex = 0;
         public int MarriedFamilyIndex = 0;

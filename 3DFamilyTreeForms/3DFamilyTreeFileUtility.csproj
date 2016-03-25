@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3DFamilyTree\AppDataStorage.cs" />
     <Compile Include="3DFamilyTree\CourtHouse.cs" />
     <Compile Include="3DFamilyTree\Family.cs" />
     <Compile Include="3DFamilyTree\FamilyEvent.cs" />
@@ -194,6 +195,9 @@
       <Project>{DD118C71-BE62-4591-BF38-CD600E0D22B2}</Project>
       <Name>UnityTreeScripts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

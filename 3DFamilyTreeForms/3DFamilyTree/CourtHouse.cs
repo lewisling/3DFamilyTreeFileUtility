@@ -62,11 +62,11 @@ namespace _3DFamilyTreeFileUtility
                 girlPersonIndex = treePersonIndex;
             }
 
-            if (girlPersonIndex != 0)
-            {
+            //if (girlPersonIndex != 0)
+            //{
                 retMarriageEvent = new FamilyEvent(myPeople, allFamilies, FamilyEvent.FamilyEventType.Marriage, year, girlPersonIndex,
                     boyPersonIndex);
-            }
+            //}
             return retMarriageEvent;
         }
 

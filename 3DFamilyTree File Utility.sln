@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTreeScripts", "UnityTr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0643FBF7-D583-4647-9C95-B9ABE00C1ECF}"
 	ProjectSection(SolutionItems) = preProject
+		Launch_3DFT.bat = Launch_3DFT.bat
+		loading.gif = loading.gif
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -20,8 +22,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6AF90D-61A1-40C8-80F2-CCD277C4A394}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{DD118C71-BE62-4591-BF38-CD600E0D22B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD118C71-BE62-4591-BF38-CD600E0D22B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD118C71-BE62-4591-BF38-CD600E0D22B2}.Release|Any CPU.ActiveCfg = Release|Any CPU

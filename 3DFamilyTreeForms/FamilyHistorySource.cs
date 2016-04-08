@@ -227,6 +227,7 @@ namespace _3DFamilyTreeFileUtility
             DescendancyTree.DescendancyNode myNode = descendacyState.Tree.Root;
             int treePersonSpouceIndex;
             int familyIndex;
+            string marriageDateString = "";
 
             TreePerson treePersonSpouce;
 
@@ -237,21 +238,17 @@ namespace _3DFamilyTreeFileUtility
 
                 treePersonSpouceIndex = _courtHouse.myPeople.addToAllPeople(treePersonSpouce);
 
-                familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
-                    myNode.Person.DisplayExtension.MarriageDate);
+                marriageDateString = myNode.Person.DisplayExtension.MarriageDate;
 
                 HELPER_Add_portrait(ft.ReadPersonById(myNode.Spouse.Id), treePersonSpouceIndex);
                 
             }
-            else
+            else  // only used no start a family if needed (if this family with out a spouse has children)
             {
                 treePersonSpouce = new TreePerson(TreePerson.PersonType.Null);
                 treePersonSpouceIndex = _courtHouse.myPeople.addToAllPeople(treePersonSpouce);
-                familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
-                    myNode.Person.DisplayExtension.MarriageDate);
-
+                marriageDateString = "";
             }
-
 
             var nextGenerationValue = generation - 1;
 
@@ -263,6 +260,12 @@ namespace _3DFamilyTreeFileUtility
 
             if (children != null)
             {
+                // We did not start a family because Spouse was null, however if we have children, lets add a place holder Bull Spouse
+                    
+                familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
+                    marriageDateString);
+
+             
                 // Add all the children to the family
                 foreach (var child in children)
                 {
@@ -277,6 +280,14 @@ namespace _3DFamilyTreeFileUtility
 
                 }
 
+            }
+            else
+            {   // if there are no children, but I still have a spouse - we need to start a family
+                if (myNode.Spouse != null)
+                {
+                    familyIndex = _courtHouse.StartFamily(treePersonIndex, treePersonSpouceIndex,
+                        marriageDateString);
+                }
             }
 
             return true;

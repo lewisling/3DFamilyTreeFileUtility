@@ -45,7 +45,7 @@ namespace _3DFamilyTreeFileUtility
 
             if (string.IsNullOrEmpty(_myAppDataStorage.FamilyInfoFileName))
             {
-                _myAppDataStorage.FamilyInfoFileName = Path.GetFullPath("..\\3DFT\\MyFamilyInfo.xml");
+                _myAppDataStorage.FamilyInfoFileName = Path.GetFullPath("..\\MyFamilyInfo.xml");
                 // first time in, so wait until we have a FILE SAVE (or opened) before letting them play it
                 this.btnPlay3DFT.Enabled = false;
                 txtOutput.AppendText(System.Environment.NewLine + System.Environment.NewLine + "--> Create or open a file, so that you can play it.");
